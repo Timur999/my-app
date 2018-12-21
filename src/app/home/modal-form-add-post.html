@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>Install Angular</h2>
+<mat-dialog-content class="mat-typography" [formGroup]="addPostForm">
+    <h3>Develop across all platforms</h3>
+    <div class="form-group">
+        <mat-form-field>
+            <input matInput placeholder="Enter your message" formControlName="userMessage" required />
+            <mat-error *ngIf="true">'You must enter a value' </mat-error>
+        </mat-form-field>
+    </div>
+    <div class="form-group">
+
+            <input  type="file" formControlName="userImage" (change)="onFileSelected($event)">
+
+    </div>
+    <div *ngIf="loading">
+        <mat-progress-bar mode="query"></mat-progress-bar>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close>Cancel</button>
+    <button mat-button (click)="Submit()" cdkFocusInitial>Add</button>
+</mat-dialog-actions>

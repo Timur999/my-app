@@ -1,0 +1,43 @@
+
+<mat-toolbar class="matToolbar" color="primary" [class.mat-elevation-z9]="true">
+  <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
+    <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+  </button>
+  <span>my-app</span>
+  <span class="spacer"></span>
+  <a mat-list-item href="#">Link 1</a>
+  <a mat-list-item href="#">Options</a>
+  <a mat-list-item href="" (click)="Logout()">Logout</a>
+</mat-toolbar>
+<!-- -------------- -->
+
+<mat-sidenav-container class="example-container" >
+  <mat-sidenav-container>
+    <mat-toolbar>My App</mat-toolbar>
+  </mat-sidenav-container>
+  <mat-sidenav #drawer class="sidenav" mode="side" opened fixedInViewport="false" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
+    [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
+    <mat-toolbar>Menu</mat-toolbar>
+    <mat-nav-list>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            Groups
+          </mat-panel-title>
+          <mat-panel-description>
+            <!-- This is a summary of the content -->
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-divider> </mat-divider>
+        <a mat-list-item *ngFor="let group of groups" href="/blogs/{{group.Id}}">{{group.GroupsName}}</a>
+        <mat-divider> </mat-divider>
+        <a mat-list-item href="/">Link</a>
+      </mat-expansion-panel>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content>
+      <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+

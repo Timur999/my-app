@@ -1,0 +1,53 @@
+  /* .mat-card{
+	position:absolute;
+	left:0;
+	right:0;
+	top:0;
+	bottom:0;
+	margin:auto;
+  width:40%;
+	height:400px;
+  }
+
+ .example-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .example-container > * {
+    margin: auto;
+    width: 100%;
+  }
+
+  .example-form {
+    min-width: 150px;
+    max-width: 500px;
+    width: 100%;
+  }
+  button{
+    display: flex;
+    text-align: center;
+    margin: auto;
+  }
+  mat-card-title{
+    text-align: center;
+  }
+  
+  .example-full-width {
+    width: 100%;
+  }
+
+  .example-half-width{
+    width: 50%;
+  }
+
+
+  .ng-valid[required], .ng-valid.required  {
+    border-left: 5px solid #42A948; 
+  }
+  
+  .ng-invalid:not(form)  {
+    border-left: 5px solid #a94442; 
+  }
+
+   */

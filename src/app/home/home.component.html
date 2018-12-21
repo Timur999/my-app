@@ -1,0 +1,153 @@
+<div id="container">
+  <!-- Button trigger modal -->
+  <mat-toolbar class="optionsContainerBar" color="primary">
+    <span>My Application</span>
+    <div class="containerForNavButton" *ngIf="!(isHandset$ | async)">
+      <button mat-button (click)="openDialog()">
+        <mat-icon>message</mat-icon>
+        <span> Add new post / Open dialog</span>
+      </button>
+      <button mat-button>
+        <mat-icon>dialpad</mat-icon>
+        <span>Redial</span>
+      </button>
+      <button mat-button disabled>
+        <mat-icon>voicemail</mat-icon>
+        <span>Check voicemail</span>
+      </button>
+      <button mat-button>
+        <mat-icon>notifications_off</mat-icon>
+        <span>Disable alerts</span>
+      </button>
+    </div>
+   
+    <button type="button" aria-label="Toggle sidenav" mat-icon-button [matMenuTriggerFor]="menu" *ngIf="isHandset$ | async">
+      <mat-icon aria-label="Side nav toggle icon">more_vert</mat-icon>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="openDialog()">
+          <mat-icon>message</mat-icon>
+          <span> Add new post / Open dialog</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>dialpad</mat-icon>
+          <span>Redial</span>
+        </button>
+        <button mat-menu-item disabled>
+          <mat-icon>voicemail</mat-icon>
+          <span>Check voicemail</span>
+        </button>
+        <button mat-menu-item>
+          <mat-icon>notifications_off</mat-icon>
+          <span>Disable alerts</span>
+        </button>
+      </mat-menu>
+    </button>
+  </mat-toolbar>
+
+  <form #formFile=ngForm (ngSubmit)="OnSubmit()">
+  <input type="file" (change)="onFileSelected($event)"> 
+  <button type="submit" >Upload</button> 
+  <!-- (click)="upLoad()" -->
+</form>
+  <div class="jumbotron">
+    <h1 class="display-4">Hello, world!</h1>
+    <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to
+      featured content or information.</p>
+    <hr class="my-4">
+  </div>
+  <hr class="my-4">
+  <div class="container">
+    <div class="row">
+      <div class="col-9">
+        2 of 3 (wider)
+        <mat-card class="postCard" *ngFor="let post of posts">
+          <mat-card-header>
+            <div mat-card-avatar class="example-header-image"></div>
+            <button class="matButton" mat-button [matMenuTriggerFor]="menu">Menu
+              <mat-icon aria-label="Side nav toggle icon">arrow_drop_down</mat-icon>
+            </button>
+
+            <mat-menu #menu="matMenu">
+              <button mat-menu-item>Item 1</button>
+              <button mat-menu-item>Item 2</button>
+            </mat-menu>
+            <mat-card-title>
+              {{post.UserName}}
+            </mat-card-title>
+            <mat-card-subtitle>title of post</mat-card-subtitle>
+          </mat-card-header>
+          <!-- {{post.Photo}} -->
+          <img mat-card-image src={{post.ImagePath}} alt="{{post.ImageName}}">
+          <mat-card-content>
+            <p class="text-justify">
+              {{post.Text}}
+            </p>
+          </mat-card-content>
+
+          <!-- <mat-card-actions *ngIf="{{post.IsPostOwner}}">
+                <!-- todo:// update post
+              </mat-card-actions> -->
+          <!--Adding Section-->
+          <form class="example-form">
+            <mat-form-field class="example-full-width">
+              <textarea matInput placeholder="Leave a comment"></textarea>
+            </mat-form-field>
+            <button [disabled]="loading" class="btn btn-primary">Send</button>
+          </form>
+
+          <!--Comments Section-->
+          <mat-accordion>
+            <mat-expansion-panel>
+              <mat-expansion-panel-header>
+                <mat-panel-title>
+                  Comments
+                </mat-panel-title>
+                <mat-panel-description>
+                  Open to see comments
+                </mat-panel-description>
+              </mat-expansion-panel-header>
+              <mat-card class="commentCard">
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-subtitle>
+                  <p class="text-left">Karol</p> <!-- {{comment.UserName}} || {{post.UserName}} -->
+                </mat-card-subtitle>
+                <mat-card-content>
+                  <p class="text-justify" style="margin-top: 25px;">
+                    It is comment
+                    <!-- {{comment.Text}} || {{post.Text}} -->
+                  </p>
+                </mat-card-content>
+              </mat-card>
+              <mat-card>
+                <div mat-card-avatar class="example-header-image"></div>
+                <mat-card-subtitle>
+                  <p class="text-left">Karol</p> <!-- {{comment.UserName}} || {{post.UserName}} -->
+                </mat-card-subtitle>
+                <mat-card-content>
+                  <p class="text-justify" style="margin-top: 25px;">
+                    It is comment
+                    <!-- {{comment.Text}} || {{post.Text}} -->
+                  </p>
+                </mat-card-content>
+              </mat-card>
+
+            </mat-expansion-panel>
+          </mat-accordion>
+
+        </mat-card>
+
+      </div>
+      <div class="col">
+
+
+        3 of 3
+      </div>
+    </div>
+  </div>
+</div>
+
+<mat-paginator [length]="lengthArray" [pageSize]="10" [pageSizeOptions]="[5, 10, 25, 100]" (page)="nextPageEvent($event)">
+</mat-paginator>
+<mat-toolbar class="footer" color="primary">
+  <span>My footer</span>
+</mat-toolbar>

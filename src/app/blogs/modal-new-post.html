@@ -1,0 +1,17 @@
+<h1 mat-dialog-title>Hi {{data.name}}</h1>
+<div mat-dialog-content>
+  <p>What's your favorite animal?</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.text">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [(ngModel)]="data.name">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Enter your email" [formControl]="data.email" required>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="data" cdkFocusInitial>Ok</button>
+</div>

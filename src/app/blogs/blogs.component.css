@@ -1,0 +1,56 @@
+.postCard{
+  width: 100%;
+  margin:auto;
+  margin-bottom: 20px;
+}
+
+.example-header-image {
+  float: left;
+  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
+  background-size: cover;
+}
+
+.commentCard{
+  margin-bottom: 10px;
+}
+
+.example-full-width {
+  width: 85%;
+}
+
+.example-form button{
+ margin: 0 0 8px 12px;
+}
+
+.matButton{
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+
+.modal {
+    margin: 100px;
+}
+
+.optionsContainerBar{
+  /* position: sticky; */
+   top:0; 
+   margin: auto;
+   z-index: 2;
+}
+
+.optionsContainerBar button{
+  margin: auto;
+}
+
+
+.example-viewport {
+  height: 200px;
+  width: 200px;
+  border: 1px solid black;
+}
+
+.example-item {
+  height: 50px;
+}
+
