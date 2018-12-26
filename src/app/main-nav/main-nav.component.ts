@@ -1,13 +1,15 @@
 import { Component, Input } from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { AlertService } from '../_services/alert.service';
 import { AuthenticationService } from '../_services/authentication.service';
 import { GroupService } from '../_services/group.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { UserService } from '../_services/user.service'
+
 import { Group } from '../model/group';
-
-
+import { User } from '../model/user';
 
 @Component({
   selector: 'app-main-nav',
@@ -16,8 +18,14 @@ import { Group } from '../model/group';
 })
 export class MainNavComponent {
 
+  subscriptionGet: Subscription;
+
   @Input() token: string;
   groups: Group[];
+  searchForm: FormGroup;
+  users: User[];
+  currentUserName: string;
+  user: User;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -27,26 +35,65 @@ export class MainNavComponent {
   constructor(private breakpointObserver: BreakpointObserver,
     private groupService: GroupService,
     private alertService: AlertService,
-    private authenticationService: AuthenticationService) {}
+    private userService: UserService,
+    private authenticationService: AuthenticationService,
+    private formBuilder: FormBuilder) { }
 
   ngOnInit() {
-    this.GetShortListOfUsersGroup();
+    this.getShortListOfUsersGroup();
+    this.getShortListOfUser();
+
+    this.searchForm = this.formBuilder.group({
+      username: ['', Validators.required]
+    });
+    this.onChanges();
+    this.currentUserName = sessionStorage.getItem("userName");
+  }
+
+  onChanges() {
+       this.searchForm.get('username').valueChanges.subscribe(val => this.onSubmit(val))
   }
 
   Logout() {
+    //this.authenticationService.logout();
     sessionStorage.removeItem("tokenKey");
+    sessionStorage.removeItem("userName");
   }
 
-  GetShortListOfUsersGroup() {
-    this.groupService.getFirstFiveGroup().subscribe(
+  getShortListOfUsersGroup() {
+    this.subscriptionGet = this.groupService.getFirstFiveGroup().subscribe(
       data => { this.groups = data },
       error => { this.alertService.error(error); })
-   // console.log(this.groups);
+    // console.log(this.groups);
   }
 
-  Value() {
-    this.groupService.getValue().subscribe(
-      data => { console.log(data); },
-      error => { this.alertService.error(error); })
+  getShortListOfUser() {
+    this.subscriptionGet = this.userService.getShortListUser().subscribe(data => {
+      this.users = data;
+    },
+      error => {
+        console.log(error);
+      })
   }
+
+  onSubmit(value) {
+    console.log(value);
+    if(value != ""){
+      console.log(value);
+      this.userService.getByName(value).subscribe(data => {
+        this.users = data;
+      },
+        error => {
+          console.log(error);
+        })
+    }else{
+      this.getShortListOfUser();
+    }
+  }
+
+  ngOnDestroy() {
+    if (this.subscriptionGet != undefined)
+      this.subscriptionGet.unsubscribe();
+  }
+
 }

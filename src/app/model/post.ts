@@ -5,7 +5,11 @@ export class Post{
     BlogId: number;
     UserName?: string;
     IsPostOwner?: boolean;
-    Photo?: any;
+    ImagePath?: string;
+    ImageName?: string;
+    Base64StringImage?: string;
+    PostCount?: number;
+    isEdit?: boolean;
 }
 
 export class SimplePost{

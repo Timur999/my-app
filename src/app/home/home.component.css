@@ -34,3 +34,19 @@
 .containerForNavButton button{
   margin-right: 50px;
 }
+
+.example-full-width {
+  width: 85%;
+}
+
+.example-form button{
+ margin: 0 0 8px 12px;
+}
+
+.example-form{
+  margin: auto;
+}
+
+img{
+  max-height: 600px;
+}

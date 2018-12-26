@@ -21,8 +21,11 @@ import { AlertComponent } from './_directives/alert.component';
 import { HomeComponent, ModalFormPost } from './home/home.component';
 import { GroupsComponent } from './groups/groups.component';
 import { GroupService } from './_services/group.service';
-import { BlogsComponent, ModalNewPost } from './blogs/blogs.component';
+import { BlogsComponent } from './blogs/blogs.component';
 import { MatDialogModule } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from './_dialogs/confirmation-dialog/confirmation-dialog.component';
+import { ConfirmationService } from './_dialogs/confirmation-dialog/confirmation-service.service';
+import { ChatComponent } from './chat/chat.component';
 
 @NgModule({
   declarations: [
@@ -34,8 +37,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     HomeComponent,
     GroupsComponent,
     BlogsComponent,
-    ModalNewPost,
-    ModalFormPost
+    ModalFormPost,
+    ConfirmationDialogComponent,
+    ChatComponent
   ],
   imports: [
     BrowserModule,
@@ -54,8 +58,9 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatDialogModule
   ],
   entryComponents: [
-    BlogsComponent, ModalNewPost,
-    HomeComponent, ModalFormPost
+    BlogsComponent, ModalFormPost,
+    HomeComponent, ModalFormPost,
+    HomeComponent, ConfirmationDialogComponent,
   ],
   providers: [
     AuthGuard,
@@ -64,7 +69,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     GroupService,
     UserService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    ConfirmationService
   ],
   bootstrap: [AppComponent]
 })

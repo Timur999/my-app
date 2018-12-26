@@ -38,17 +38,6 @@ export class PostService {
     return this.httpClient.post<Post>(this.rootUrl + "/api/Posts", body, this.httpOptions);
   }
 
-  postPostWithPhoto(fileToUpload: File) : Observable<any>{
-
-    console.log(fileToUpload)
-    const formData = new FormData();
-    formData.append("Image", fileToUpload, fileToUpload.name);
-    formData.append("Name", "Pumba");
-
-    console.log(formData.getAll);
-    return this.httpClient.post<any>(this.rootUrl + "/api/PostImage", formData );
-  }
-
   postPostMessageAndImage(formField: any, blogId: number){
     const formData = new FormData();
     if(formField.userImage != null){
@@ -59,4 +48,22 @@ export class PostService {
 
     return this.httpClient.post<any>(this.rootUrl + "/api/PostImage", formData );
   }
+
+  //Edit post
+  putPost(formField: any, postId: number) :Observable<any>{
+    const formData = new FormData();
+    if(formField.image != null){
+      formData.append("Image", formField.image, formField.image.name);
+    }
+    formData.append("Text", formField.userMessage);
+    formData.append("PostId", postId.toString());
+
+    return this.httpClient.put<any>(this.rootUrl + "/api/EditPost", formData );
+  }
+
+  //Delete post
+  deletePost(idPost: number) :Observable<any>{
+    return this.httpClient.delete<any>(this.rootUrl + "/api/Posts/"  + idPost);
+  }
+
 }

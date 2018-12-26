@@ -1,18 +1,16 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { Post } from '../model/post';
-import { PostService } from '../_services/post.service';
-import { AlertService } from '../_services/alert.service';
-import { Router, ActivatedRoute } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { PostService } from '../_services/post.service'
+import { AlertService } from '../_services/alert.service'
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { first } from 'rxjs/operators';
-import { PageEvent } from '@angular/material';
-import { Subscription } from 'rxjs';
+import { Post } from '../model/post';
+import { first, map } from 'rxjs/operators';
+import { Observable, Subscription } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-
-import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
-
+import { PageEvent } from '@angular/material';
+import { MatDialog, MatDialogRef } from '@angular/material';
+import { ConfirmationService } from '../_dialogs/confirmation-dialog/confirmation-service.service'
+import { Router, ActivatedRoute } from '@angular/router';
+import { ModalFormPost } from '../home/home.component'
 
 export interface DialogData {
   text: string;
@@ -31,68 +29,41 @@ export class BlogsComponent implements OnInit, OnDestroy {
 
   subscriptionPost: Subscription;
   subscriptionGet: Subscription;
+  subscriptionPut: Subscription;
 
-  postForm: FormGroup;
-  loading = false;
-  submitted = false;
+  EditPostForm: FormGroup;
+  userMessage: string;
   post: Post;
   posts: Post[];
+  loading = false;
   blogId: number;
-  // MatPaginator Output
-  pageEvent: PageEvent;
-  firstPage: number = 0;
+  userPost: Post;
   pageIndex: number;
-  lengthArray: number = 20;
-  userPostMessage: string;
-
-  text: string;
-  name: string;
-  email: string;
+  lengthArray: number;
+  image: File;
+  editPostId: number;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
       map(result => result.matches)
     );
 
-  constructor(
-    public dialog: MatDialog,
-    private breakpointObserver: BreakpointObserver,
-    private postService: PostService,
+  constructor(private postService: PostService,
+    private formBuilder: FormBuilder,
     private alertService: AlertService,
-    private router: Router,
-    private route: ActivatedRoute,
-    private formBuilder: FormBuilder) { }
+    private breakpointObserver: BreakpointObserver,
+    public matDialog: MatDialog,
+    private confirmationService: ConfirmationService,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     var id = this.route.snapshot.paramMap.get('id');
     this.blogId = Number.parseInt(id);
-    this.getPostsBelongToGroup(this.firstPage);
-    this.postForm = this.formBuilder.group({
-      message: ['', Validators.required]
-    })
-  }
-
-  // convenience getter for easy access to form fields
-  get f() { return this.postForm.controls; }
-
-  onSubmit() {
-    this.submitted = true;
-    // stop here if form is invalid
-    if (this.postForm.invalid) {
-      return;
-    }
-    this.loading = true;
-    this.subscriptionPost = this.postService.postPost(this.f.message.value, this.blogId).pipe(
-      first()).subscribe(
-        data => {
-          console.log(data);
-          this.alertService.success('Successful', true);
-        },
-        error => {
-          this.alertService.error(error);
-          this.loading = false;
-        }
-      )
+    this.getPostsBelongToGroup(0);
+    this.EditPostForm = this.formBuilder.group({
+      userMessage: [this.userMessage, [Validators.required, Validators.maxLength(250)]],
+      image: ['']
+    });
   }
 
   nextPageEvent(event) {
@@ -110,60 +81,81 @@ export class BlogsComponent implements OnInit, OnDestroy {
     this.postService.getNextTenPostBelongToGroup(this.blogId, firstPage).subscribe(
       data => {
         this.posts = data;
+        if(this.posts.length > 0){
+          this.lengthArray = this.posts[0].PostCount;
+        }else{
+          this.lengthArray = 0;
+        }
+
+        console.log(data)
       },
       error => { this.alertService.error(error) });
   }
 
-  isMorePost() {
-    // console.log( this.posts.length < this.pageIndex)
-    // return this.posts.length < this.pageIndex;
-    return true;
+  openDialog() {
+    const dialogRef = this.matDialog.open(ModalFormPost);
+
+    dialogRef.beforeClose().subscribe(result => {
+      if (result != undefined && result != '') {
+        this.subscriptionPost = this.postService.postPostMessageAndImage(result, this.blogId).pipe(
+          first()).subscribe(
+            data => {
+              // this.posts.push(data);
+              console.log(data);
+              this.alertService.success("Successful", true);
+            },
+            error => {
+              this.alertService.error(error);
+            }
+          )
+      }
+      // console.log(`Dialog result beforeClose: ${result}`)
+    })
   }
 
-  openDialog() {
+  onFileSelected(event) {
+    this.image = event.target.files[0];
+  }
 
-    const dialogRef = this.dialog.open(ModalNewPost,{
-      width: '250px',
-      data: {text: this.text, name: this.name, email: this.email }
-    });
-    dialogRef.afterClosed().subscribe(result => {
-      console.log(`Dialog result: ${result.text}`);
-    });
+  EditPost(post: Post) {
+    console.log(post);
+    post.isEdit = !post.isEdit
+    this.editPostId = post.Id;
+  }
+
+  OnSUbmitEditForm(post: Post) {
+    if (this.EditPostForm.valid) {
+      this.loading = true;
+      console.log("Valid post");
+      this.EditPostForm.value.image = this.image;
+      this.subscriptionPut =
+        this.postService.putPost(this.EditPostForm.value, post.Id)
+          .subscribe(
+            data => {
+              console.log(data);
+              this.alertService.success("Successful", true);
+              this.loading = false;
+              post.isEdit = false;
+            },
+            error => {
+              this.alertService.error(error);
+              this.loading = false;
+              post.isEdit = false;
+            }
+          )
+    }
+  }
+
+  DeletePost(post) {
+    this.confirmationService.openConfirmDialog("Confirm", "Are you sure?", post.Id);
   }
 
   ngOnDestroy() {
-    this.subscriptionPost.unsubscribe();
-    this.subscriptionGet.unsubscribe();
+    if (this.subscriptionPost != undefined)
+      this.subscriptionPost.unsubscribe();
+
+    if (this.subscriptionGet != undefined)
+      this.subscriptionGet.unsubscribe();
   }
-}
 
-
-@Component({
-  selector: 'modal-new-post',
-  templateUrl: 'modal-new-post.html',
-})
-export class ModalNewPost   {
-
-  constructor(private formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<ModalNewPost>,
-    @Inject(MAT_DIALOG_DATA) public data: DialogData) { }
-
-  
-
-  // onSubmit(){
-  //   console.log("hallo");
-  //   if(this.message.invalid){
-  //     console.log(this.message.invalid);
-
-  //     return;
-  //   }
-
-  // }
-
-
-  // getErrorMessage(){
-  //   return this.message.hasError('required') ? 'You must enter a value' :
-  //   this.message.hasError('email') ? 'Not a valid email' :
-  //       '';
-  // }
 }

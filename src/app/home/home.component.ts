@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { PostService } from '../_services/post.service'
 import { AlertService } from '../_services/alert.service'
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Post } from '../model/post';
 import { first, map } from 'rxjs/operators';
 import { Observable, Subscription } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { PageEvent } from '@angular/material';
 import { MatDialog, MatDialogRef } from '@angular/material';
+import { ConfirmationService } from '../_dialogs/confirmation-dialog/confirmation-service.service'
 
 
 @Component({
@@ -19,17 +20,20 @@ export class HomeComponent implements OnInit {
 
   subscriptionPost: Subscription;
   subscriptionGet: Subscription;
+  subscriptionPut: Subscription;
 
-  postForm: FormGroup;
+  EditPostForm: FormGroup;
+  userMessage: string;
   post: Post;
   posts: Post[];
   loading = false;
-  submitted = false;
   blogId: number = 1;
   userPost: Post;
   pageIndex: number;
-  lengthArray: number = 20;
+  lengthArray: number;
   image: File;
+  editPostId: number;
+  currentUserName: string;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -40,14 +44,21 @@ export class HomeComponent implements OnInit {
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private breakpointObserver: BreakpointObserver,
-    public matDialog: MatDialog) { }
+    public matDialog: MatDialog,
+    private confirmationService: ConfirmationService) { }
 
   ngOnInit() {
-    this.postForm = this.formBuilder.group({
-      message: ['', Validators.required]
+    this.EditPostForm = this.formBuilder.group({
+      userMessage: [this.userMessage, [Validators.required, Validators.maxLength(250)]],
+      image: ['']
     });
 
-     this.getPostsBelongToGroup(0);
+    this.getPostsBelongToGroup(0);
+    //  for(let item of this.posts){
+    //   this.getImagePost(item.Id);
+    //  }
+
+    this.currentUserName = sessionStorage.getItem("userName");
   }
 
   nextPageEvent(event) {
@@ -65,6 +76,12 @@ export class HomeComponent implements OnInit {
     this.postService.getNextTenPostBelongToGroup(this.blogId, firstPage).subscribe(
       data => {
         this.posts = data;
+        if(this.posts.length > 0){
+          this.lengthArray = this.posts[0].PostCount;
+        }else{
+          this.lengthArray = 0;
+        }
+        console.log(data)
       },
       error => { this.alertService.error(error) });
   }
@@ -74,11 +91,10 @@ export class HomeComponent implements OnInit {
 
     dialogRef.beforeClose().subscribe(result => {
       if (result != undefined && result != '') {
-         //this.subscriptionPost = this.postService.postPost(result.userMessage, 1).pipe(
         this.subscriptionPost = this.postService.postPostMessageAndImage(result, 1).pipe(
           first()).subscribe(
             data => {
-              this.posts.push(data);
+              // this.posts.push(data);
               console.log(data);
               this.alertService.success("Successful", true);
             },
@@ -91,23 +107,42 @@ export class HomeComponent implements OnInit {
     })
   }
 
-  onFileSelected(event){
-
+  onFileSelected(event) {
     this.image = event.target.files[0];
+  }
 
-    this.post = {
-     Text : "testImage",
-     BlogId : 1
-   };
+  EditPost(post: Post) {
+    console.log(post);
+    post.isEdit = !post.isEdit
+    this.editPostId = post.Id;
+  }
 
-   console.log(event);
- }
+  OnSUbmitEditForm(post: Post) {
+    if (this.EditPostForm.valid) {
+      this.loading = true;
+      console.log("Valid post");
+      this.EditPostForm.value.image = this.image;
+      this.subscriptionPut =
+        this.postService.putPost(this.EditPostForm.value, post.Id)
+          .subscribe(
+            data => {
+              console.log(data);
+              this.alertService.success("Successful", true);
+              this.loading = false;
+              post.isEdit = false;
+            },
+            error => {
+              this.alertService.error(error);
+              this.loading = false;
+              post.isEdit = false;
+            }
+          )
+    }
+  }
 
- OnSubmit(){
-   console.log(this.image);
-   this.postService.postPostWithPhoto(this.image).subscribe(data => 
-     console.log(data));
- }
+  DeletePost(post) {
+    this.confirmationService.openConfirmDialog("Confirm", "Are you sure?", post.Id);
+  }
 
   ngOnDestroy() {
     if (this.subscriptionPost != undefined)
@@ -116,6 +151,7 @@ export class HomeComponent implements OnInit {
     if (this.subscriptionGet != undefined)
       this.subscriptionGet.unsubscribe();
   }
+
 }
 
 @Component({
@@ -139,16 +175,13 @@ export class ModalFormPost implements OnInit {
     })
   }
 
-  onFileSelected(event){
+  onFileSelected(event) {
     this.userImage = event.target.files[0];
-
     this.post = {
-     Text : "testImage",
-     BlogId : 1
-   };
-
-  // console.log(event);
- }
+      Text: "testImage",
+      BlogId: 1
+    };
+  }
 
   Submit() {
     if (this.addPostForm.valid) {

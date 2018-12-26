@@ -1,9 +1,10 @@
 export class User{
     Id?: number;
+    UserName: string;
     FirstName: string;
     LastName: string;
-    Email: string;
-    Password: string;
-    ConfirmPassword: string;
-    Token: string;
+    Email?: string;
+    Password?: string;
+    ConfirmPassword?: string;
+    Token?: string;
 }
