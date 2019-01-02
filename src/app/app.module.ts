@@ -26,6 +26,25 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from './_dialogs/confirmation-dialog/confirmation-dialog.component';
 import { ConfirmationService } from './_dialogs/confirmation-dialog/confirmation-service.service';
 import { ChatComponent } from './chat/chat.component';
+import { SignalrService } from './_services/signalr.service';
+
+import { SignalRModule, SignalRConfiguration } from 'ng2-signalr';
+import { ForbiddenPageComponent } from './forbidden-page/forbidden-page.component';
+
+
+export function createConfig(): SignalRConfiguration {
+  const c = new SignalRConfiguration();
+  c.hubName = 'NotifyHub';
+  c.qs = { user: 'donald' };
+  c.url = 'http://localhost:62747';
+  c.logging = true;
+
+  // >= v5.0.0
+  c.executeEventsInZone = true; // optional, default is true
+  c.executeErrorsInZone = false; // optional, default is false
+  c.executeStatusChangeInZone = true; // optional, default is true
+  return c;
+}
 
 @NgModule({
   declarations: [
@@ -39,7 +58,8 @@ import { ChatComponent } from './chat/chat.component';
     BlogsComponent,
     ModalFormPost,
     ConfirmationDialogComponent,
-    ChatComponent
+    ChatComponent,
+    ForbiddenPageComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +75,8 @@ import { ChatComponent } from './chat/chat.component';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatDialogModule
+    MatDialogModule,
+    SignalRModule.forRoot(createConfig)
   ],
   entryComponents: [
     BlogsComponent, ModalFormPost,
@@ -70,7 +91,8 @@ import { ChatComponent } from './chat/chat.component';
     UserService,
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
-    ConfirmationService
+    ConfirmationService,
+    SignalrService
   ],
   bootstrap: [AppComponent]
 })

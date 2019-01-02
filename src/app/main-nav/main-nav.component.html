@@ -54,14 +54,17 @@
             <!-- This is a summary of the content -->
           </mat-panel-description>
         </mat-expansion-panel-header>
-        <form [formGroup]="searchForm" >
-            <div class="form-group">
-                <input class="form-control" type="text" formControlName="username" placeholder="Search user" aria-label="Search">
-            </div>
+        <form [formGroup]="searchForm">
+          <div class="form-group">
+            <input class="form-control" type="text" formControlName="username" placeholder="Search user" aria-label="Search">
+          </div>
         </form>
         <mat-divider> </mat-divider>
-        <div *ngFor="let user of users" >
-            <a mat-list-item *ngIf="user.UserName != currentUserName"  href="/chat/{{user.Id}}" >{{user.UserName}}</a>
+        <!-- <ul *ngFor="let user of users" >
+          <li (click)="getChatAndRedirect(user.Id)">{{user.UserName}}</li>
+        </ul> -->
+        <div *ngFor="let user of users">
+          <a mat-list-item *ngIf="user.UserName != currentUserName" (click)="getChatAndRedirect(user.Id)">{{user.UserName}}</a>
         </div>
         <mat-divider> </mat-divider>
       </mat-expansion-panel>

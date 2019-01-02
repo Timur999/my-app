@@ -26,6 +26,10 @@ export class UserService {
         return this.http.get(`/users/` + id);
     }
 
+    getUserId() {
+        return this.http.get(this.rootUrl +"/api/GetUserId");
+    }
+
     register(user: User) {
         return this.http.post(this.rootUrl + "/api/Account/Register", user);
     }
