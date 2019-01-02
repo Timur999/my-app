@@ -12,7 +12,7 @@ export class GroupService {
   constructor(private httpClient: HttpClient) { }
 
   getFirstFiveGroup() :Observable<any>{
-    return this.httpClient.get(this.rootUrl + "/api/fivegroups");
+    return this.httpClient.get(this.rootUrl + "/api/five`groups");
   }
 
   getGroupById(id: number) :Observable<Group>{
