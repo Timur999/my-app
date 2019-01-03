@@ -30,6 +30,8 @@ import { SignalrService } from './_services/signalr.service';
 
 import { SignalRModule, SignalRConfiguration } from 'ng2-signalr';
 import { ForbiddenPageComponent } from './forbidden-page/forbidden-page.component';
+import { CreateChatDialogComponent } from './_dialogs/create-chat-dialog/create-chat-dialog.component';
+import { CreatechatDialogService } from './_dialogs/create-chat-dialog/createchat-dialog.service';
 
 
 export function createConfig(): SignalRConfiguration {
@@ -59,7 +61,8 @@ export function createConfig(): SignalRConfiguration {
     ModalFormPost,
     ConfirmationDialogComponent,
     ChatComponent,
-    ForbiddenPageComponent
+    ForbiddenPageComponent,
+    CreateChatDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -82,6 +85,7 @@ export function createConfig(): SignalRConfiguration {
     BlogsComponent, ModalFormPost,
     HomeComponent, ModalFormPost,
     HomeComponent, ConfirmationDialogComponent,
+    MainNavComponent, CreateChatDialogComponent,
   ],
   providers: [
     AuthGuard,
@@ -92,7 +96,8 @@ export function createConfig(): SignalRConfiguration {
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     ConfirmationService,
-    SignalrService
+    SignalrService,
+    CreatechatDialogService
   ],
   bootstrap: [AppComponent]
 })

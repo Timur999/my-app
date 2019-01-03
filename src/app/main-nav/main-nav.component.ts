@@ -9,9 +9,11 @@ import { AlertService } from '../_services/alert.service';
 import { GroupService } from '../_services/group.service';
 import { UserService } from '../_services/user.service';
 import { ChatService } from '../_services/chat.service';
+import { CreatechatDialogService } from '../_dialogs/create-chat-dialog/createchat-dialog.service';
 
 import { Group } from '../model/group';
 import { User } from '../model/user';
+import { Chat } from '../model/chat';
 
 @Component({
   selector: 'app-main-nav',
@@ -21,13 +23,17 @@ import { User } from '../model/user';
 export class MainNavComponent {
 
   subscriptionGet: Subscription;
+  subscriptionGetChat: Subscription
+  subscriptionGetChats: Subscription
 
   // @Input() token: string;
   groups: Group[];
   searchForm: FormGroup;
   users: User[];
-  currentUserName: string;
   user: User;
+  currentUserName: string;
+  public chats: Chat[] = [];
+  chat: Chat;
   chatId: number = 0;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
@@ -39,13 +45,18 @@ export class MainNavComponent {
     private groupService: GroupService,
     private alertService: AlertService,
     private userService: UserService,
+    private createchatDialogService: CreatechatDialogService,
     private formBuilder: FormBuilder,
     public chatService: ChatService,
-    public router: Router) { }
+    public router: Router) {
+  }
 
   ngOnInit() {
     this.getShortListOfUsersGroup();
     this.getShortListOfUser();
+    this.getChatsCreatedByUser();   
+
+    this.chats = this.chatService.usersChatList;
 
     this.searchForm = this.formBuilder.group({
       username: ['', Validators.required]
@@ -81,9 +92,7 @@ export class MainNavComponent {
   }
 
   onSubmit(value) {
-    console.log(value);
     if (value != "") {
-      console.log(value);
       this.userService.getByName(value).subscribe(data => {
         this.users = data;
       },
@@ -95,22 +104,45 @@ export class MainNavComponent {
     }
   }
 
-
   getChatAndRedirect(userId: string) {
 
-    this.chatService.getChatByMemberChat(userId).subscribe(
+    this.subscriptionGetChat = this.chatService.getChatByMemberChat(userId).subscribe(
       data => {
         this.chatId = data;
         //href="/chat/{{chatId}}"+ this.chatId
-        this.router.navigate(['/chat/' + this.chatId]);          
+        this.router.navigate(['/chat/' + this.chatId]);
       },
       error => { console.log("error") })
+  }
+
+  createNewChat() {
+    this.createchatDialogService.openDialog();
+  }
+
+  getChatsCreatedByUser() {
+    this.subscriptionGetChats = this.chatService.getChatsCreatedByUser().subscribe(
+      data => {
+        var tempChatsList = data;
+        tempChatsList.forEach(element => {
+          this.chats.push(element);
+        });
+        //this.chats = this.chatService.usersChatList;
+        console.log("getChatsCreatedByUser " + data);
+      },
+      error => { console.log(error) }
+    )
   }
 
 
   ngOnDestroy() {
     if (this.subscriptionGet != undefined)
       this.subscriptionGet.unsubscribe();
+
+    if (this.subscriptionGetChats != undefined)
+      this.subscriptionGetChats.unsubscribe();
+
+    if (this.subscriptionGetChat != undefined)
+      this.subscriptionGetChat.unsubscribe();
   }
 
 }

@@ -26,7 +26,6 @@ export class ChatComponent implements OnInit {
   messages: Message[] = [];
   message: Message;
   userMessage: string;
-  chat: Chat;
   chatId: number;
   membersId: string[] = [];
 
@@ -49,7 +48,6 @@ export class ChatComponent implements OnInit {
 
     this.signalrService.startConnection();
     this.signalrService.startEventListener();
-
   }
 
   getChat() {
@@ -60,8 +58,6 @@ export class ChatComponent implements OnInit {
       msgs.forEach(msg => {
         this.messages.push(msg);
       });
-      // console.log(this.chat);
-      // console.log("getChat success");
     },
       error => {
         console.log("getChat error " + error)

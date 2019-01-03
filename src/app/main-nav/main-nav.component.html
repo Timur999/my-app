@@ -67,6 +67,23 @@
           <a mat-list-item *ngIf="user.UserName != currentUserName" (click)="getChatAndRedirect(user.Id)">{{user.UserName}}</a>
         </div>
         <mat-divider> </mat-divider>
+        <a mat-list-item (click)="createNewChat()">Create chat/group chat</a>
+        <mat-divider> </mat-divider>
+        <mat-expansion-panel>
+          <mat-expansion-panel-header>
+            <mat-panel-title>
+              My Chats
+            </mat-panel-title>
+            <mat-panel-description>
+              <!-- This is a summary of the content -->
+            </mat-panel-description>
+          </mat-expansion-panel-header>
+          <mat-divider> </mat-divider>
+          <mat-divider> </mat-divider>
+          <div *ngFor="let chat of chats">
+            <a mat-list-item href="/chat/{{chat.Id}}"> {{chat.ChatName}} </a>
+          </div>
+        </mat-expansion-panel>
       </mat-expansion-panel>
     </mat-nav-list>
   </mat-sidenav>
