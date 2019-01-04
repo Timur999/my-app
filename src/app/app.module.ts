@@ -32,6 +32,7 @@ import { SignalRModule, SignalRConfiguration } from 'ng2-signalr';
 import { ForbiddenPageComponent } from './forbidden-page/forbidden-page.component';
 import { CreateChatDialogComponent } from './_dialogs/create-chat-dialog/create-chat-dialog.component';
 import { CreatechatDialogService } from './_dialogs/create-chat-dialog/createchat-dialog.service';
+import { AddNewMemebersToChatDialogComponent } from './_dialogs/add-new-memebers-to-chat-dialog/add-new-memebers-to-chat-dialog.component';
 
 
 export function createConfig(): SignalRConfiguration {
@@ -62,7 +63,8 @@ export function createConfig(): SignalRConfiguration {
     ConfirmationDialogComponent,
     ChatComponent,
     ForbiddenPageComponent,
-    CreateChatDialogComponent
+    CreateChatDialogComponent,
+    AddNewMemebersToChatDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -86,6 +88,7 @@ export function createConfig(): SignalRConfiguration {
     HomeComponent, ModalFormPost,
     HomeComponent, ConfirmationDialogComponent,
     MainNavComponent, CreateChatDialogComponent,
+    ChatComponent, AddNewMemebersToChatDialogComponent,
   ],
   providers: [
     AuthGuard,

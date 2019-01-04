@@ -1,11 +1,6 @@
-<h2 mat-dialog-title>Create new chat</h2>
-<mat-dialog-content class="mat-typography" [formGroup]="createChatForm">
-    <h3>Write name of chat, please</h3>
-    <div class="form-group">
-        <mat-form-field>
-            <input matInput placeholder="Set chat name" formControlName="chatName" required />
-        </mat-form-field>
-    </div>
+<h2 mat-dialog-title>Add members dialog</h2>
+<mat-dialog-content class="mat-typography" [formGroup]="addMembersToChatForm">
+    <h3>Choose your frends and add theirs to chat</h3>
     <div class="form-group">
         <mat-form-field>
             <mat-select placeholder="Users" formControlName="users" multiple>

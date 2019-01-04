@@ -7,7 +7,7 @@ export class Chat {
     UsersInChat: string[];
   //  messages: Message[];
 
-  constructor(chatName: string, chatAdminId: string, usersInChat: string[]){
+  constructor(chatName: string, chatAdminId: string, usersInChat?: string[]){
       this.ChatName = chatName;
       this.ChatAdminId = chatAdminId;
       this.UsersInChat = usersInChat;

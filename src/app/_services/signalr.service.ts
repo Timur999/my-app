@@ -36,12 +36,14 @@ export class SignalrService {
         this._connection = conx;
     }
 
-    startEventListener() {
+    startEventListener(chatRoomId: number) {
         this.onMessageSent$ = new BroadcastEventListener<Message>('OnMessageSent');
         this._connection.listen(this.onMessageSent$);
         this.onMessageSent$.subscribe((chatMessage: Message) => {
-            this.messages.push(chatMessage);
-            this.messagesSubject.next(this.messages);
+            if(chatMessage.ChatId == chatRoomId){
+                this.messages.push(chatMessage);
+                this.messagesSubject.next(this.messages);
+            }
         });
     }
 

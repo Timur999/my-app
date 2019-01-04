@@ -157,6 +157,14 @@ export class BlogsComponent implements OnInit, OnDestroy {
     this.confirmationService.openConfirmDialog("Confirm", "Are you sure?", post.Id);
   }
 
+  openDialogAddNewMemberToGroup(){
+
+  }
+
+  openDialogLeaveFromGroup(){
+    
+  }
+
   ngOnDestroy() {
     if (this.subscriptionPost != undefined)
       this.subscriptionPost.unsubscribe();

@@ -1,10 +1,15 @@
 export class User{
-    Id?: number;
+    Id?: string;
     UserName: string;
-    FirstName: string;
-    LastName: string;
+    FirstName?: string;
+    LastName?: string;
     Email?: string;
     Password?: string;
     ConfirmPassword?: string;
     Token?: string;
+
+    constructor(id: string, userName: string){
+        this.Id = id,
+        this.UserName = userName
+    }
 }

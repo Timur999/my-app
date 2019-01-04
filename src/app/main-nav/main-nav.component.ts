@@ -32,7 +32,7 @@ export class MainNavComponent {
   users: User[];
   user: User;
   currentUserName: string;
-  public chats: Chat[] = [];
+  chats: Chat[] = [];
   chat: Chat;
   chatId: number = 0;
 
