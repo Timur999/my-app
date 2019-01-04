@@ -11,6 +11,7 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { ConfirmationService } from '../_dialogs/confirmation-dialog/confirmation-service.service'
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalFormPost } from '../home/home.component'
+import { ChatService } from '../_services/chat.service';
 
 export interface DialogData {
   text: string;
@@ -57,13 +58,16 @@ export class BlogsComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute) { }
 
   ngOnInit() {
-    var id = this.route.snapshot.paramMap.get('id');
-    this.blogId = Number.parseInt(id);
-    this.getPostsBelongToGroup(0);
     this.EditPostForm = this.formBuilder.group({
       userMessage: [this.userMessage, [Validators.required, Validators.maxLength(250)]],
       image: ['']
     });
+
+    var id = this.route.snapshot.paramMap.get('id');
+    this.blogId = Number.parseInt(id);
+    this.posts = this.postService.postList;
+
+    this.getPostsBelongToGroup();
   }
 
   nextPageEvent(event) {
@@ -77,17 +81,20 @@ export class BlogsComponent implements OnInit, OnDestroy {
       error => { this.alertService.error(error) });
   }
 
-  getPostsBelongToGroup(firstPage: number) {
+  getPostsBelongToGroup(firstPage: number = 0) {
+    var tempChatsList: Post[] = [];
     this.postService.getNextTenPostBelongToGroup(this.blogId, firstPage).subscribe(
       data => {
-        this.posts = data;
-        if(this.posts.length > 0){
+        tempChatsList = data;
+        tempChatsList.forEach(element => {
+          this.posts.push(element);
+        });
+        // this.posts = data;
+        if (this.posts.length > 0) {
           this.lengthArray = this.posts[0].PostCount;
-        }else{
+        } else {
           this.lengthArray = 0;
         }
-
-        console.log(data)
       },
       error => { this.alertService.error(error) });
   }
