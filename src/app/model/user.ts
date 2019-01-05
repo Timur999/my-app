@@ -7,6 +7,8 @@ export class User{
     Password?: string;
     ConfirmPassword?: string;
     Token?: string;
+    Position: number;
+    Role: string;
 
     constructor(id: string, userName: string){
         this.Id = id,

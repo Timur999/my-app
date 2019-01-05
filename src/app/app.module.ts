@@ -32,7 +32,9 @@ import { SignalRModule, SignalRConfiguration } from 'ng2-signalr';
 import { ForbiddenPageComponent } from './forbidden-page/forbidden-page.component';
 import { CreateChatDialogComponent } from './_dialogs/create-chat-dialog/create-chat-dialog.component';
 import { CreatechatDialogService } from './_dialogs/create-chat-dialog/createchat-dialog.service';
-import { AddNewMemebersToChatDialogComponent } from './_dialogs/add-new-memebers-to-chat-dialog/add-new-memebers-to-chat-dialog.component';
+import { AddNewMemebersDialogComponent } from './_dialogs/add-new-memebers-dialog/add-new-memebers-dialog.component';
+import { CreateGroupDialogComponent } from './_dialogs/create-group-dialog/create-group-dialog.component';
+import { ListOfUserComponent } from './list-of-user/list-of-user.component';
 
 
 export function createConfig(): SignalRConfiguration {
@@ -64,7 +66,9 @@ export function createConfig(): SignalRConfiguration {
     ChatComponent,
     ForbiddenPageComponent,
     CreateChatDialogComponent,
-    AddNewMemebersToChatDialogComponent,
+    AddNewMemebersDialogComponent,
+    CreateGroupDialogComponent,
+    ListOfUserComponent,
   ],
   imports: [
     BrowserModule,
@@ -88,7 +92,8 @@ export function createConfig(): SignalRConfiguration {
     HomeComponent, ModalFormPost,
     HomeComponent, ConfirmationDialogComponent,
     MainNavComponent, CreateChatDialogComponent,
-    ChatComponent, AddNewMemebersToChatDialogComponent,
+    ChatComponent, AddNewMemebersDialogComponent,
+    HomeComponent, CreateGroupDialogComponent,
   ],
   providers: [
     AuthGuard,
@@ -100,7 +105,7 @@ export function createConfig(): SignalRConfiguration {
     { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
     ConfirmationService,
     SignalrService,
-    CreatechatDialogService
+    CreatechatDialogService,
   ],
   bootstrap: [AppComponent]
 })

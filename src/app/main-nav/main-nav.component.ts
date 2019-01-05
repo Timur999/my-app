@@ -10,6 +10,7 @@ import { GroupService } from '../_services/group.service';
 import { UserService } from '../_services/user.service';
 import { ChatService } from '../_services/chat.service';
 import { CreatechatDialogService } from '../_dialogs/create-chat-dialog/createchat-dialog.service';
+import { GroupdialogService } from '../_dialogs/create-group-dialog/groupdialog.service';
 
 import { Group } from '../model/group';
 import { User } from '../model/user';
@@ -46,6 +47,7 @@ export class MainNavComponent {
     private alertService: AlertService,
     private userService: UserService,
     private createchatDialogService: CreatechatDialogService,
+    private groupdialogService: GroupdialogService,
     private formBuilder: FormBuilder,
     public chatService: ChatService,
     public router: Router) {
@@ -57,6 +59,7 @@ export class MainNavComponent {
     this.getChatsCreatedByUser();   
 
     this.chats = this.chatService.usersChatList;
+    this.groups = this.groupService.userGroupList;
 
     this.searchForm = this.formBuilder.group({
       username: ['', Validators.required]
@@ -77,7 +80,11 @@ export class MainNavComponent {
 
   getShortListOfUsersGroup() {
     this.subscriptionGet = this.groupService.getFirstFiveGroup().subscribe(
-      data => { this.groups = data },
+      data => { 
+        var tempGroupList = data;
+        tempGroupList.forEach(item =>
+          this.groups.push(item))
+        },
       error => { this.alertService.error(error); })
     // console.log(this.groups);
   }
@@ -131,6 +138,10 @@ export class MainNavComponent {
       },
       error => { console.log(error) }
     )
+  }
+
+  openCreateGroupDialog(){
+    this.groupdialogService.openCreateGroupDialog("Creator group", "Write name of group, please");
   }
 
 

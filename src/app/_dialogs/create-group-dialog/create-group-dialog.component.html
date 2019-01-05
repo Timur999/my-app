@@ -1,0 +1,25 @@
+<h2 mat-dialog-title>{{title}}</h2>
+<mat-dialog-content class="mat-typography" [formGroup]="createGroupForm">
+  <h3>{{message}}</h3>
+  <div class="form-group">
+    <mat-form-field>
+      <input matInput placeholder="Set group name" formControlName="groupName" required />
+    </mat-form-field>
+  </div>
+  <div class="form-group">
+      <mat-form-field>
+          <mat-select placeholder="Users" formControlName="users" multiple>
+              <input class="form-control" type="text" formControlName="searchUsername" placeholder="Search user"
+                  aria-label="Search">
+              <mat-option *ngFor="let user of userList" [value]="user">{{user.UserName}}</mat-option>
+          </mat-select>
+      </mat-form-field>
+  </div>
+  <div *ngIf="loading">
+    <mat-progress-bar mode="query"></mat-progress-bar>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-button mat-dialog-close class="btn btn-danger">Cancel</button>
+  <button mat-button class="btn btn-primary" (click)="Submit()" cdkFocusInitial>Add</button>
+</mat-dialog-actions>

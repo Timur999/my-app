@@ -7,6 +7,10 @@
         <mat-icon>message</mat-icon>
         <span> Add new post / Open dialog</span>
       </button>
+      <button mat-button (click)="showListOfUser()">
+          <mat-icon>list</mat-icon>
+          <span>List of user</span>
+        </button>
       <button mat-button (click)="openDialogAddNewMemberToGroup()">
         <mat-icon>person_add</mat-icon>
         <span>Add user</span>
@@ -15,6 +19,10 @@
         <mat-icon>person_add_disabled</mat-icon>
         <span>Leave group</span>
       </button>
+      <button mat-button (click)="openDialogDeleteGroup()" [disabled]="!isAdminGroup">
+          <mat-icon>delete</mat-icon>
+          <span>Delete group</span>
+        </button>
     </div>
 
     <button type="button" aria-label="Toggle sidenav" mat-icon-button [matMenuTriggerFor]="menu" *ngIf="isHandset$ | async">
@@ -35,6 +43,9 @@
       </mat-menu>
     </button>
   </mat-toolbar>
+
+<app-list-of-user *ngIf="showListOfUserComponent" [blogId] = "blogId"></app-list-of-user>
+
   <div class="jumbotron">
     <h1 class="display-4">Hello, world!</h1>
     <p class="lead">This is a simple hero unit, a simple jumbotron-style component for calling extra attention to

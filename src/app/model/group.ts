@@ -1,6 +1,8 @@
 export class Group {
-    Id: number
+    Id?: number
     GroupsName: string
-    AdminGroupId: string
-    DateOfCreatedGroup: Date
+    AdminGroupId?: string
+    MembersOfGroup: string[]
+    DateOfCreatedGroup?: Date
+    IsAdmin?: boolean;
 }

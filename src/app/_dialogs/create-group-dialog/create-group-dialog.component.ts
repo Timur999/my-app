@@ -1,33 +1,32 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { MatDialogRef } from '@angular/material';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Observable, Subscription } from 'rxjs';
-
 import { UserService } from '../../_services/user.service'
 import { User } from 'src/app/model/user';
 
 @Component({
-  selector: 'app-create-chat-dialog',
-  templateUrl: './create-chat-dialog.component.html',
-  styleUrls: ['./create-chat-dialog.component.css']
+  selector: 'app-create-group-dialog',
+  templateUrl: './create-group-dialog.component.html',
+  styleUrls: ['./create-group-dialog.component.css']
 })
-export class CreateChatDialogComponent implements OnInit {
+export class CreateGroupDialogComponent implements OnInit {
 
-  subscription: Subscription
-
-  createChatForm: FormGroup;
+  createGroupForm: FormGroup;
   loading = false;
-  chatName: string;
-  newMemberOfChatList: string[] = [];
+  groupName: string;
+  newMemberOfGroup: string[] = [];
   userList: User[];
 
-  constructor(public matDialogRef: MatDialogRef<CreateChatDialogComponent>,
-    private fb: FormBuilder,
+  @Input() title: string;
+  @Input() message: string;
+
+  constructor(public matDialogRef: MatDialogRef<CreateGroupDialogComponent>,
+    private fb: FormBuilder, 
     public userService: UserService) { }
 
   ngOnInit() {
-    this.createChatForm = this.fb.group({
-      chatName: [this.chatName, [Validators.required, Validators.maxLength(250)]],
+    this.createGroupForm = this.fb.group({
+      groupName: [this.groupName, [Validators.required, Validators.maxLength(250)]],
       users: ['', Validators.required],
       searchUsername: ['']
     });
@@ -37,7 +36,7 @@ export class CreateChatDialogComponent implements OnInit {
   }
 
   onChanges() {
-    this.createChatForm.get('searchUsername').valueChanges.subscribe(val => this.onSearch(val))
+    this.createGroupForm.get('searchUsername').valueChanges.subscribe(val => this.onSearch(val))
   }
 
   onSearch(value) {
@@ -55,7 +54,7 @@ export class CreateChatDialogComponent implements OnInit {
   }
 
   getShortListOfUser() {
-    this.subscription = this.userService.getShortListUser().subscribe(data => {
+    this.userService.getShortListUser().subscribe(data => {
       console.log(data);
       this.userList = data;
     },
@@ -65,10 +64,9 @@ export class CreateChatDialogComponent implements OnInit {
   }
 
   Submit(){
-    if (this.createChatForm.valid) {
+    if (this.createGroupForm.valid) {
       this.loading = true;
-      this.matDialogRef.close(this.createChatForm.value);
+      this.matDialogRef.close(this.createGroupForm.value);
     }
   }
-  
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
 import { MatDialogRef } from '@angular/material';
@@ -6,11 +6,11 @@ import { User } from 'src/app/model/user';
 import { UserService } from '../../_services/user.service'
 
 @Component({
-  selector: 'app-add-new-memebers-to-chat-dialog',
-  templateUrl: './add-new-memebers-to-chat-dialog.component.html',
-  styleUrls: ['./add-new-memebers-to-chat-dialog.component.css']
+  selector: 'app-add-new-memebers-dialog',
+  templateUrl: './add-new-memebers-dialog.component.html',
+  styleUrls: ['./add-new-memebers-dialog.component.css']
 })
-export class AddNewMemebersToChatDialogComponent implements OnInit {
+export class AddNewMemebersDialogComponent implements OnInit {
 
   subscription: Subscription
 
@@ -19,7 +19,9 @@ export class AddNewMemebersToChatDialogComponent implements OnInit {
   user: User;
   loading = false;
 
-  constructor(public matDialogRef: MatDialogRef<AddNewMemebersToChatDialogComponent>,
+  @Input() message: string;
+
+  constructor(public matDialogRef: MatDialogRef<AddNewMemebersDialogComponent>,
     public fb: FormBuilder,
     public userService: UserService) { }
 

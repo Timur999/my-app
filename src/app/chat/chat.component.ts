@@ -88,7 +88,7 @@ export class ChatComponent implements OnInit {
     var msgs: Message[] = [];
     const id = this.route.snapshot.paramMap.get('id');
     this.chatId = parseInt(id);
-    
+
     this.chatService.getMessagesFromChatById(parseInt(id)).subscribe(data => {
       msgs = data;
       msgs.forEach(msg => {
@@ -134,7 +134,7 @@ export class ChatComponent implements OnInit {
   }
 
   openDialogAddNewMemberChat() {
-    this.createchatDialogService.openAddNewMemeberToChatDialog(this.chatId);
+    this.createchatDialogService.openAddNewMemeberToChatDialog(this.chatId, "Choose your frends and add theirs to chat");
   }
 
   ngOnDestroy() {

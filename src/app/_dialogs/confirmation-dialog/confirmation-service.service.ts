@@ -28,6 +28,7 @@ export class ConfirmationService {
       if (result == true) {
         this.postService.deletePost(postId).subscribe(
           data => {
+            this.postService.UpdatePostList(postId);
             this.alertService.success("Successful", true);
           },
           error => {

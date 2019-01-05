@@ -9,6 +9,8 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTableModule } from '@angular/material/table';
+
 @NgModule({
     imports: [
         MatFormFieldModule,
@@ -20,7 +22,8 @@ import { MatSelectModule } from '@angular/material/select';
         MatBottomSheetModule,
         MatPaginatorModule,
         MatProgressBarModule,
-        MatSelectModule
+        MatSelectModule,
+        MatTableModule
     ],
     exports: [
         MatFormFieldModule,
@@ -32,7 +35,8 @@ import { MatSelectModule } from '@angular/material/select';
         MatBottomSheetModule,
         MatPaginatorModule,
         MatProgressBarModule,
-        MatSelectModule
+        MatSelectModule,
+        MatTableModule
     ],
 })
 

@@ -11,7 +11,8 @@ import { MatDialog, MatDialogRef } from '@angular/material';
 import { ConfirmationService } from '../_dialogs/confirmation-dialog/confirmation-service.service'
 import { Router, ActivatedRoute } from '@angular/router';
 import { ModalFormPost } from '../home/home.component'
-import { ChatService } from '../_services/chat.service';
+import { GroupService } from '../_services/group.service';
+import { GroupdialogService } from '../_dialogs/create-group-dialog/groupdialog.service';
 
 export interface DialogData {
   text: string;
@@ -43,6 +44,8 @@ export class BlogsComponent implements OnInit, OnDestroy {
   lengthArray: number;
   image: File;
   editPostId: number;
+  isAdminGroup: boolean = false;
+  showListOfUserComponent: boolean = false;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -53,9 +56,11 @@ export class BlogsComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private alertService: AlertService,
     private breakpointObserver: BreakpointObserver,
-    public matDialog: MatDialog,
+    private matDialog: MatDialog,
     private confirmationService: ConfirmationService,
-    private route: ActivatedRoute) { }
+    private route: ActivatedRoute,
+    private groupService: GroupService,
+    private groupdialogService: GroupdialogService) { }
 
   ngOnInit() {
     this.EditPostForm = this.formBuilder.group({
@@ -68,6 +73,17 @@ export class BlogsComponent implements OnInit, OnDestroy {
     this.posts = this.postService.postList;
 
     this.getPostsBelongToGroup();
+    this.getGroupInfo()
+  }
+
+  getGroupInfo() {
+    this.groupService.getGroupById(this.blogId).subscribe(
+      data => { 
+        this.isAdminGroup = data.IsAdmin;
+
+       },
+      error => { console.log(error + " while get group info") }
+    )
   }
 
   nextPageEvent(event) {
@@ -89,7 +105,8 @@ export class BlogsComponent implements OnInit, OnDestroy {
         tempChatsList.forEach(element => {
           this.posts.push(element);
         });
-        // this.posts = data;
+
+        //that code define how many post is in this Blog
         if (this.posts.length > 0) {
           this.lengthArray = this.posts[0].PostCount;
         } else {
@@ -157,12 +174,21 @@ export class BlogsComponent implements OnInit, OnDestroy {
     this.confirmationService.openConfirmDialog("Confirm", "Are you sure?", post.Id);
   }
 
-  openDialogAddNewMemberToGroup(){
-
+  openDialogAddNewMemberToGroup() {
+    console.log(this.blogId);
+    this.groupdialogService.openAddNewMemberDialog(this.blogId, "Choose your frends and send invitation")
   }
 
-  openDialogLeaveFromGroup(){
-    
+  openDialogLeaveFromGroup() {
+    this.groupdialogService.openConfirmLeaveGroupDialog(this.blogId, "Confirm", "Are you sure?")
+  }
+
+  openDialogDeleteGroup() {
+    this.groupdialogService.openConfirmDeleteDialog(this.blogId, "Confirm", "Are you sure?");
+  }
+
+  showListOfUser(){
+    this.showListOfUserComponent = !this.showListOfUserComponent;
   }
 
   ngOnDestroy() {

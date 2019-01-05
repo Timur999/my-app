@@ -28,6 +28,8 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
         <mat-divider> </mat-divider>
+        <a mat-list-item (click)="openCreateGroupDialog()">Create Group</a>
+        <mat-divider> </mat-divider>
         <a mat-list-item *ngFor="let group of groups" href="/blogs/{{group.Id}}">{{group.GroupsName}}</a>
         <mat-divider> </mat-divider>
         <a mat-list-item href="/">Link</a>

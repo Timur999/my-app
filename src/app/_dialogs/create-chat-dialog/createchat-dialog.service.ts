@@ -3,7 +3,7 @@ import { MatDialog } from '@angular/material';
 import { CreateChatDialogComponent } from '../create-chat-dialog/create-chat-dialog.component'
 import { Chat } from 'src/app/model/chat';
 import { ChatService } from '../../_services/chat.service'
-import { AddNewMemebersToChatDialogComponent } from '../add-new-memebers-to-chat-dialog/add-new-memebers-to-chat-dialog.component'
+import { AddNewMemebersDialogComponent } from '../add-new-memebers-dialog/add-new-memebers-dialog.component'
 
 
 @Injectable({
@@ -18,7 +18,7 @@ export class CreatechatDialogService {
     const dialogRef = this.matDialog.open(CreateChatDialogComponent);
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result == '')
+      if (result == '')
         return;
 
       let listOfUserId: string[] = [];
@@ -34,11 +34,12 @@ export class CreatechatDialogService {
     });
   }
 
-  openAddNewMemeberToChatDialog(chatId: number) {
-    const dialogRef = this.matDialog.open(AddNewMemebersToChatDialogComponent);
+  openAddNewMemeberToChatDialog(chatId: number, message: string) {
+    const dialogRef = this.matDialog.open(AddNewMemebersDialogComponent);
+    dialogRef.componentInstance.message = message;
 
     dialogRef.afterClosed().subscribe(result => {
-      if(result == '')
+      if (result == '')
         return;
 
       let listOfUserId: string[] = [];

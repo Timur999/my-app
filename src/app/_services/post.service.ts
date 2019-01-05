@@ -88,4 +88,15 @@ export class PostService {
     return this.postsSubject.value;
   }
 
+  
+  UpdatePostList(postId: number) {
+    this.postlist.forEach(element => {
+      if (element.Id == postId) {
+        var index = this.postlist.indexOf(element);
+        this.postlist.splice(index, 1);
+      }
+    });
+    this.postsSubject.next(this.postlist);
+  }
+
 }
