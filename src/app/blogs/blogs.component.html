@@ -8,9 +8,9 @@
         <span> Add new post / Open dialog</span>
       </button>
       <button mat-button (click)="showListOfUser()">
-          <mat-icon>list</mat-icon>
-          <span>List of user</span>
-        </button>
+        <mat-icon>list</mat-icon>
+        <span>List of user</span>
+      </button>
       <button mat-button (click)="openDialogAddNewMemberToGroup()">
         <mat-icon>person_add</mat-icon>
         <span>Add user</span>
@@ -20,9 +20,9 @@
         <span>Leave group</span>
       </button>
       <button mat-button (click)="openDialogDeleteGroup()" [disabled]="!isAdminGroup">
-          <mat-icon>delete</mat-icon>
-          <span>Delete group</span>
-        </button>
+        <mat-icon>delete</mat-icon>
+        <span>Delete group</span>
+      </button>
     </div>
 
     <button type="button" aria-label="Toggle sidenav" mat-icon-button [matMenuTriggerFor]="menu" *ngIf="isHandset$ | async">
@@ -32,7 +32,11 @@
           <mat-icon>message</mat-icon>
           <span> Add new post / Open dialog</span>
         </button>
-        <button mat-menu-item click)="openDialogAddNewMemberToGroup()">
+        <button mat-menu-item (click)="showListOfUser()">
+          <mat-icon>list</mat-icon>
+          <span>List of user</span>
+        </button>
+        <button mat-menu-item (click)="openDialogAddNewMemberToGroup()">
           <mat-icon>person_add</mat-icon>
           <span>Add user</span>
         </button>
@@ -40,11 +44,15 @@
           <mat-icon>person_add_disabled</mat-icon>
           <span>Leave group</span>
         </button>
+        <button mat-menu-item (click)="openDialogDeleteGroup()" [disabled]="!isAdminGroup">
+          <mat-icon>delete</mat-icon>
+          <span>Delete group</span>
+        </button>
       </mat-menu>
     </button>
   </mat-toolbar>
 
-<app-list-of-user *ngIf="showListOfUserComponent" [blogId] = "blogId"></app-list-of-user>
+  <app-list-of-user *ngIf="showListOfUserComponent" [blogId]="blogId"></app-list-of-user>
 
   <div class="jumbotron">
     <h1 class="display-4">Hello, world!</h1>

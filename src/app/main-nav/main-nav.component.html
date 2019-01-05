@@ -2,9 +2,9 @@
   <button type="button" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
     <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
   </button>
-  <span>my-app</span>
+  <a mat-list-item href="/Home"><span>my-app</span></a>
   <span class="spacer"></span>
-  <a mat-list-item href="#">Link 1</a>
+  <a mat-list-item href="/invitations">Invitation</a>
   <a mat-list-item href="#">Options</a>
   <a mat-list-item href="" (click)="Logout()">Logout</a>
 </mat-toolbar>
@@ -28,7 +28,7 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
         <mat-divider> </mat-divider>
-        <a mat-list-item (click)="openCreateGroupDialog()">Create Group</a>
+        <button mat-button class="btn btn-primary" (click)="openCreateGroupDialog()" >Create Group</button>
         <mat-divider> </mat-divider>
         <a mat-list-item *ngFor="let group of groups" href="/blogs/{{group.Id}}">{{group.GroupsName}}</a>
         <mat-divider> </mat-divider>
@@ -69,9 +69,11 @@
           <a mat-list-item *ngIf="user.UserName != currentUserName" (click)="getChatAndRedirect(user.Id)">{{user.UserName}}</a>
         </div>
         <mat-divider> </mat-divider>
-        <a mat-list-item (click)="createNewChat()">Create chat/group chat</a>
-        <mat-divider> </mat-divider>
-        <mat-expansion-panel>
+      </mat-expansion-panel>
+      <mat-expansion-panel>
+          <mat-divider> </mat-divider>
+          <button mat-button class="btn btn-primary" (click)="createNewChat()">Create chat/group chat</button>
+          <mat-divider> </mat-divider>
           <mat-expansion-panel-header>
             <mat-panel-title>
               My Chats
@@ -86,7 +88,6 @@
             <a mat-list-item href="/chat/{{chat.Id}}"> {{chat.ChatName}} </a>
           </div>
         </mat-expansion-panel>
-      </mat-expansion-panel>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>

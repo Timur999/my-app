@@ -5,4 +5,6 @@ export class Invitation{
     UserIdSender?: string;
     UserIdReceiver: string;
     IsAccepted?: boolean;
+    Position?: number;
+    UserNameSender?: string;
 }

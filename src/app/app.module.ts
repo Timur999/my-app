@@ -35,6 +35,7 @@ import { CreatechatDialogService } from './_dialogs/create-chat-dialog/createcha
 import { AddNewMemebersDialogComponent } from './_dialogs/add-new-memebers-dialog/add-new-memebers-dialog.component';
 import { CreateGroupDialogComponent } from './_dialogs/create-group-dialog/create-group-dialog.component';
 import { ListOfUserComponent } from './list-of-user/list-of-user.component';
+import { ListOfInvitationComponent } from './list-of-invitation/list-of-invitation.component';
 
 
 export function createConfig(): SignalRConfiguration {
@@ -69,6 +70,7 @@ export function createConfig(): SignalRConfiguration {
     AddNewMemebersDialogComponent,
     CreateGroupDialogComponent,
     ListOfUserComponent,
+    ListOfInvitationComponent,
   ],
   imports: [
     BrowserModule,

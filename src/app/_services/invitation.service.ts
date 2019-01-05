@@ -14,4 +14,12 @@ export class InvitationService {
   postInvitation(invitationList: Invitation[]): Observable<any> {
     return this.httpClient.post(this.rootUrl + "/api/Invitations", invitationList);
   }
+
+  getAllInvitationBelongToUser(): Observable<Invitation[]>{
+    return this.httpClient.get<Invitation[]>(this.rootUrl + "/api/GetALlInvitations");
+  }
+
+  putInvitation(invitation : Invitation): Observable<any>{
+    return this.httpClient.put<any>(this.rootUrl + "/api/Invitations/" + invitation.Id, invitation );
+  }
 }
