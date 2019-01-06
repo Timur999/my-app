@@ -4,7 +4,7 @@ import { AlertService } from '../_services/alert.service'
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Post } from '../model/post';
 import { first, map } from 'rxjs/operators';
-import { Observable, Subscription } from 'rxjs';
+import { Observable, Subscription, from } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { PageEvent } from '@angular/material';
 import { MatDialog, MatDialogRef } from '@angular/material';
@@ -13,12 +13,23 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { ModalFormPost } from '../home/home.component'
 import { GroupService } from '../_services/group.service';
 import { GroupdialogService } from '../_dialogs/create-group-dialog/groupdialog.service';
+import { Comment } from '../model/comment'
+import { CommentService } from '../_services/comment.service'
 
-export interface DialogData {
-  text: string;
-  name: string;
-  email: string;
-}
+// export interface DialogData {
+//   text: string;
+//   name: string;
+//   email: string;
+// }
+
+// const COMMENT: Comment[] = [
+//   { Id: 1, PostId: 2, SenderName: "Michal", Text: "Nowy komentarz20" },
+//   { Id: 2, PostId: 2, SenderName: "Michal", Text: "Nowy komentarz20" },
+//   { Id: 3, PostId: 3, SenderName: "Michal", Text: "Nowy komentarz19" },
+//   { Id: 4, PostId: 3, SenderName: "Michal", Text: "Nowy komentarz19" },
+//   { Id: 5, PostId: 4, SenderName: "Michal", Text: "Nowy komentarz18" },
+//   { Id: 6, PostId: 2, SenderName: "Michal", Text: "Nowy komentarz20" },
+// ];
 
 @Component({
   selector: 'app-blogs',
@@ -34,6 +45,7 @@ export class BlogsComponent implements OnInit, OnDestroy {
   subscriptionPut: Subscription;
 
   EditPostForm: FormGroup;
+  SendCommentForm: FormGroup;
   userMessage: string;
   post: Post;
   posts: Post[];
@@ -46,6 +58,10 @@ export class BlogsComponent implements OnInit, OnDestroy {
   editPostId: number;
   isAdminGroup: boolean = false;
   showListOfUserComponent: boolean = false;
+
+  commentsList: Comment[] = [];
+  commentMessage: string;
+  currentUserName: string;
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -60,7 +76,8 @@ export class BlogsComponent implements OnInit, OnDestroy {
     private confirmationService: ConfirmationService,
     private route: ActivatedRoute,
     private groupService: GroupService,
-    private groupdialogService: GroupdialogService) { }
+    private groupdialogService: GroupdialogService,
+    private commentService: CommentService) { }
 
   ngOnInit() {
     this.EditPostForm = this.formBuilder.group({
@@ -68,20 +85,26 @@ export class BlogsComponent implements OnInit, OnDestroy {
       image: ['']
     });
 
+    this.SendCommentForm = this.formBuilder.group({
+      commentMessage: [this.commentMessage, [Validators.required, Validators.maxLength(250)]]
+    });
+
     var id = this.route.snapshot.paramMap.get('id');
     this.blogId = Number.parseInt(id);
     this.posts = this.postService.postList;
+    this.currentUserName = sessionStorage.getItem("userName");
 
     this.getPostsBelongToGroup();
-    this.getGroupInfo()
+    this.getGroupInfo();
+    this.getCommentList();
   }
 
   getGroupInfo() {
     this.groupService.getGroupById(this.blogId).subscribe(
-      data => { 
+      data => {
         this.isAdminGroup = data.IsAdmin;
 
-       },
+      },
       error => { console.log(error + " while get group info") }
     )
   }
@@ -112,6 +135,7 @@ export class BlogsComponent implements OnInit, OnDestroy {
         } else {
           this.lengthArray = 0;
         }
+
       },
       error => { this.alertService.error(error) });
   }
@@ -142,7 +166,7 @@ export class BlogsComponent implements OnInit, OnDestroy {
   }
 
   EditPost(post: Post) {
-    console.log(post);
+    //Show/Hide edit fields 
     post.isEdit = !post.isEdit
     this.editPostId = post.Id;
   }
@@ -150,13 +174,14 @@ export class BlogsComponent implements OnInit, OnDestroy {
   OnSUbmitEditForm(post: Post) {
     if (this.EditPostForm.valid) {
       this.loading = true;
-      console.log("Valid post");
       this.EditPostForm.value.image = this.image;
       this.subscriptionPut =
         this.postService.putPost(this.EditPostForm.value, post.Id)
           .subscribe(
             data => {
               console.log(data);
+              var indexEditPost = this.posts.indexOf(post);
+              this.posts.splice(indexEditPost,1, data);
               this.alertService.success("Successful", true);
               this.loading = false;
               post.isEdit = false;
@@ -187,9 +212,45 @@ export class BlogsComponent implements OnInit, OnDestroy {
     this.groupdialogService.openConfirmDeleteDialog(this.blogId, "Confirm", "Are you sure?");
   }
 
-  showListOfUser(){
+  showListOfUser() {
     this.showListOfUserComponent = !this.showListOfUserComponent;
   }
+
+  getCommentList() {
+    this.commentService.getCommentsByGroup(this.blogId).subscribe(
+      data => { 
+        this.commentsList = data;
+        console.log(data)
+       },
+      error => { console.log(error) }
+    );
+  }
+
+  OnSubmitSendComment(post: Post) {
+
+    if (this.SendCommentForm.valid) {
+      this.loading = true;
+      var comment: Comment = {
+        BlogId: this.blogId,
+        PostId: post.Id,
+        SenderName: this.currentUserName,
+        Text: this.SendCommentForm.get("commentMessage").value
+      }
+      console.log(post)
+      this.commentService.postComment(comment).subscribe(
+        data => {
+          this.commentMessage = '';
+          this.commentsList.push(comment);
+          this.loading = false;
+        },
+        error => {
+          console.log(error)
+          this.loading = false;
+        }
+      );
+    }
+  }
+
 
   ngOnDestroy() {
     if (this.subscriptionPost != undefined)
@@ -200,3 +261,6 @@ export class BlogsComponent implements OnInit, OnDestroy {
   }
 
 }
+
+
+

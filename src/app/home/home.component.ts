@@ -9,7 +9,8 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import { PageEvent } from '@angular/material';
 import { MatDialog, MatDialogRef } from '@angular/material';
 import { ConfirmationService } from '../_dialogs/confirmation-dialog/confirmation-service.service'
-
+import { Comment } from '../model/comment'
+import { CommentService } from '../_services/comment.service'
 
 @Component({
   selector: 'app-home',
@@ -23,6 +24,7 @@ export class HomeComponent implements OnInit {
   subscriptionPut: Subscription;
 
   EditPostForm: FormGroup;
+  SendCommentForm: FormGroup;
   userMessage: string;
   post: Post;
   posts: Post[];
@@ -34,6 +36,8 @@ export class HomeComponent implements OnInit {
   image: File;
   editPostId: number;
   currentUserName: string;
+  commentMessage: string;
+  commentsList: Comment[] = [];
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(
@@ -45,21 +49,24 @@ export class HomeComponent implements OnInit {
     private alertService: AlertService,
     private breakpointObserver: BreakpointObserver,
     public matDialog: MatDialog,
-    private confirmationService: ConfirmationService) { }
+    private confirmationService: ConfirmationService,
+    private commentService: CommentService) { }
 
   ngOnInit() {
     this.EditPostForm = this.formBuilder.group({
       userMessage: [this.userMessage, [Validators.required, Validators.maxLength(250)]],
       image: ['']
     });
-
-    this.getPostsBelongToGroup(0);
-    //  for(let item of this.posts){
-    //   this.getImagePost(item.Id);
-    //  }
+    this.SendCommentForm = this.formBuilder.group({
+      commentMessage: [this.commentMessage, [Validators.required, Validators.maxLength(250)]]
+    });
 
     this.currentUserName = sessionStorage.getItem("userName");
-  }
+    this.posts = this.postService.postList;
+
+    this.getPostsBelongToGroup(0);
+    this.getCommentList();
+   }
 
   nextPageEvent(event) {
     console.log(event.pageIndex)
@@ -75,10 +82,14 @@ export class HomeComponent implements OnInit {
   getPostsBelongToGroup(firstPage: number) {
     this.postService.getNextTenPostBelongToGroup(this.blogId, firstPage).subscribe(
       data => {
-        this.posts = data;
-        if(this.posts.length > 0){
+        var tempChatsList = data;
+        tempChatsList.forEach(element => {
+          this.posts.push(element);
+        });
+
+        if (this.posts.length > 0) {
           this.lengthArray = this.posts[0].PostCount;
-        }else{
+        } else {
           this.lengthArray = 0;
         }
         console.log(data)
@@ -112,7 +123,7 @@ export class HomeComponent implements OnInit {
   }
 
   EditPost(post: Post) {
-    console.log(post);
+    //Show/hide edit fields
     post.isEdit = !post.isEdit
     this.editPostId = post.Id;
   }
@@ -120,13 +131,14 @@ export class HomeComponent implements OnInit {
   OnSUbmitEditForm(post: Post) {
     if (this.EditPostForm.valid) {
       this.loading = true;
-      console.log("Valid post");
       this.EditPostForm.value.image = this.image;
       this.subscriptionPut =
         this.postService.putPost(this.EditPostForm.value, post.Id)
           .subscribe(
             data => {
               console.log(data);
+              var indexEditPost = this.posts.indexOf(post);
+              this.posts.splice(indexEditPost, 1, data);
               this.alertService.success("Successful", true);
               this.loading = false;
               post.isEdit = false;
@@ -140,6 +152,41 @@ export class HomeComponent implements OnInit {
     }
   }
 
+
+  getCommentList() {
+    this.commentService.getCommentsByGroup(this.blogId).subscribe(
+      data => {
+        this.commentsList = data;
+        console.log(data)
+      },
+      error => { console.log(error) }
+    );
+  }
+
+  OnSubmitSendComment(post: Post) {
+
+    if (this.SendCommentForm.valid) {
+      this.loading = true;
+      var comment: Comment = {
+        BlogId: this.blogId,
+        PostId: post.Id,
+        SenderName: this.currentUserName,
+        Text: this.SendCommentForm.get("commentMessage").value
+      }
+      console.log(post)
+      this.commentService.postComment(comment).subscribe(
+        data => {
+          this.commentMessage = '';
+          this.commentsList.push(comment);
+          this.loading = false;
+        },
+        error => {
+          console.log(error)
+          this.loading = false;
+        }
+      );
+    }
+  }
   DeletePost(post) {
     this.confirmationService.openConfirmDialog("Confirm", "Are you sure?", post.Id);
   }

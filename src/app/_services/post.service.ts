@@ -38,19 +38,6 @@ export class PostService {
     return this.httpClient.get(this.rootUrl + "/api/Posts/" + id + "/" + numberOfPage);
   }
 
-  // postPost(Text: string, blogId: number): Observable<any> {
-  //   let body: Post = {
-  //     Text: Text,
-  //     BlogId: blogId
-  //   }
-  //   return this.httpClient.post<Post>(this.rootUrl + "/api/Posts", body, this.httpOptions).pipe(map((val: Post ) => {
-  //     console.log( this.postlist)
-  //     this.postlist.unshift(val);
-  //     this.postsSubject.next(this.postlist);
-  //     console.log( this.postlist)
-  //   }));
-  // }
-
   postPostMessageAndImage(formField: any, blogId: number) :Observable<any> {
     const formData = new FormData();
     if (formField.userImage != null) {

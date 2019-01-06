@@ -108,11 +108,14 @@
             </mat-card>
           </mat-card-content>
           <!--Adding Section-->
-          <form class="example-form">
+          <form [formGroup]="SendCommentForm" (ngSubmit)="OnSubmitSendComment(post)"  class="example-form">
             <mat-form-field class="example-full-width">
-              <textarea matInput placeholder="Leave a comment"></textarea>
+              <textarea matInput placeholder="Leave a comment" formControlName="commentMessage" required ></textarea>
             </mat-form-field>
             <button [disabled]="loading" class="btn btn-primary">Send</button>
+            <div *ngIf="loading">
+                <mat-progress-bar mode="query"></mat-progress-bar>
+              </div>
           </form>
 
           <!--Comments Section-->
@@ -126,31 +129,20 @@
                   Open to see comments
                 </mat-panel-description>
               </mat-expansion-panel-header>
-              <mat-card class="commentCard">
+              <div *ngFor="let comment of commentsList" >
+              <mat-card class="commentCard" *ngIf="comment.PostId == post.Id">
                 <div mat-card-avatar class="example-header-image"></div>
                 <mat-card-subtitle>
-                  <p class="text-left">Karol</p> <!-- {{comment.UserName}} || {{post.UserName}} -->
+                  <p class="text-left">{{comment.SenderName}}</p> <!-- {{comment.UserName}} || {{post.UserName}} -->
                 </mat-card-subtitle>
                 <mat-card-content>
                   <p class="text-justify" style="margin-top: 25px;">
-                    It is comment
+                    {{comment.Text}}
                     <!-- {{comment.Text}} || {{post.Text}} -->
                   </p>
                 </mat-card-content>
               </mat-card>
-              <mat-card>
-                <div mat-card-avatar class="example-header-image"></div>
-                <mat-card-subtitle>
-                  <p class="text-left">Karol</p> <!-- {{comment.UserName}} || {{post.UserName}} -->
-                </mat-card-subtitle>
-                <mat-card-content>
-                  <p class="text-justify" style="margin-top: 25px;">
-                    It is comment
-                    <!-- {{comment.Text}} || {{post.Text}} -->
-                  </p>
-                </mat-card-content>
-              </mat-card>
-
+            </div>
             </mat-expansion-panel>
           </mat-accordion>
 
