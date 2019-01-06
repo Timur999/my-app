@@ -36,6 +36,8 @@ import { AddNewMemebersDialogComponent } from './_dialogs/add-new-memebers-dialo
 import { CreateGroupDialogComponent } from './_dialogs/create-group-dialog/create-group-dialog.component';
 import { ListOfUserComponent } from './list-of-user/list-of-user.component';
 import { ListOfInvitationComponent } from './list-of-invitation/list-of-invitation.component';
+import { EventsComponent } from './events/events.component';
+import { EventDialogComponent } from './_dialogs/event-dialog/event-dialog.component'
 
 
 export function createConfig(): SignalRConfiguration {
@@ -71,6 +73,8 @@ export function createConfig(): SignalRConfiguration {
     CreateGroupDialogComponent,
     ListOfUserComponent,
     ListOfInvitationComponent,
+    EventsComponent,
+    EventDialogComponent,
   ],
   imports: [
     BrowserModule,
@@ -96,6 +100,8 @@ export function createConfig(): SignalRConfiguration {
     MainNavComponent, CreateChatDialogComponent,
     ChatComponent, AddNewMemebersDialogComponent,
     HomeComponent, CreateGroupDialogComponent,
+    EventsComponent, EventDialogComponent,
+
   ],
   providers: [
     AuthGuard,

@@ -10,6 +10,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatSelectModule } from '@angular/material/select';
 import { MatTableModule } from '@angular/material/table';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatNativeDateModule } from '@angular/material';
+import { MatBadgeModule } from '@angular/material/badge';;
 
 @NgModule({
     imports: [
@@ -23,7 +26,10 @@ import { MatTableModule } from '@angular/material/table';
         MatPaginatorModule,
         MatProgressBarModule,
         MatSelectModule,
-        MatTableModule
+        MatTableModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatBadgeModule
     ],
     exports: [
         MatFormFieldModule,
@@ -36,7 +42,10 @@ import { MatTableModule } from '@angular/material/table';
         MatPaginatorModule,
         MatProgressBarModule,
         MatSelectModule,
-        MatTableModule
+        MatTableModule,
+        MatDatepickerModule,
+        MatNativeDateModule,
+        MatBadgeModule
     ],
 })
 

@@ -73,7 +73,11 @@ export class HomeComponent implements OnInit {
     this.pageIndex = event.pageIndex;
     this.subscriptionGet = this.postService.getNextTenPostBelongToGroup(this.blogId, event.pageIndex).subscribe(
       data => {
-        this.posts = data;
+        this.posts.length = 0;
+        var tempChatsList = data;
+        tempChatsList.forEach(element => {
+          this.posts.push(element);
+        });
         document.querySelector('.mat-sidenav-content').scrollTop = 0;
       },
       error => { this.alertService.error(error) });

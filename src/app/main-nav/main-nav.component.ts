@@ -134,7 +134,6 @@ export class MainNavComponent {
           this.chats.push(element);
         });
         //this.chats = this.chatService.usersChatList;
-        console.log("getChatsCreatedByUser " + data);
       },
       error => { console.log(error) }
     )
