@@ -17,16 +17,15 @@ export class EventsService {
   constructor(private httpClient: HttpClient) {
     this.eventsSubject = new BehaviorSubject<Event[]>(this.eventlist);
     this.eventsObser = this.eventsSubject.asObservable();
-   }
+  }
 
-  getAllPost(skipEventPost: number): Observable<Event[]>{
+  getAllEvents(skipEventPost: number): Observable<Event[]> {
     return this.httpClient.get<Event[]>(this.rootUrl + "/api/Events/" + skipEventPost);
   }
 
 
-  postEvent(formField: any) :Observable<any>  {
+  postEvent(formField: any): Observable<any> {
     const formData = new FormData();
-    console.log(formField);
     if (formField.eventImage != null) {
       formData.append("Image", formField.eventImage, formField.eventImage.name);
     }
@@ -41,14 +40,31 @@ export class EventsService {
     }));;
   }
 
-  putSubscriptionEventPost(eventId: number, ) :Observable<any>{
-    return this.httpClient.put<any>(this.rootUrl + "/api/SubscriptionEvents/" + eventId, '' );
+  putSubscriptionEventPost(eventId: number, ): Observable<any> {
+    return this.httpClient.put<any>(this.rootUrl + "/api/SubscriptionEvents/" + eventId, '');
   }
+
+  putEditEventPost(eventId: number, formField: any): Observable<any> {
+    const formData = new FormData();
+    console.log(formField);
+    if (formField.eventImage != null) {
+      formData.append("Image", formField.eventImage, formField.eventImage.name);
+    }
+    formData.append("Text", formField.eventText);
+    formData.append("EventDate", formField.eventDate);
+    formData.append("EventName", formField.eventName);
+    return this.httpClient.put<any>(this.rootUrl + "/api/Events/" + eventId, formData);
+  }
+
+  deleteEventPost(eventId: number): Observable<any> {
+    return this.httpClient.delete<any>(this.rootUrl + "/api/DeleteEvent/" + eventId);
+  }
+
   public get postList(): Event[] {
     return this.eventsSubject.value;
   }
 
-  UpdatePostList(eventId: number) {
+  UpdateEventList(eventId: number) {
     this.eventlist.forEach(element => {
       if (element.Id == eventId) {
         var index = this.eventlist.indexOf(element);

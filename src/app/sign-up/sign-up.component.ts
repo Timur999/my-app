@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { first } from 'rxjs/operators';
-
-import { AlertService  } from '../_services/alert.service';
-import { UserService  } from '../_services/user.service';
+import { compareValidator } from '../shared/compare-validator.directive';
+import { AlertService } from '../_services/alert.service';
+import { UserService } from '../_services/user.service';
 
 
 @Component({
@@ -25,9 +25,9 @@ export class SignUpComponent implements OnInit {
     this.registerForm = this.formBuilder.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', Validators.required],
-      password: ['', [Validators.required, Validators.minLength(6)]],
-      confirmpassword: ['', [Validators.required, Validators.minLength(6)]]
+      email: ['', Validators.compose([Validators.required, Validators.email])],
+      password: ['', Validators.compose([Validators.required, Validators.minLength(6)])],
+      confirmpassword: ['',  Validators.compose([Validators.required, Validators.minLength(6), compareValidator('password')])]
     });
   }
   // convenience getter for easy access to form fields
@@ -35,7 +35,6 @@ export class SignUpComponent implements OnInit {
 
   onSubmit() {
     this.submitted = true;
-
     // stop here if form is invalid
     if (this.registerForm.invalid) {
       return;

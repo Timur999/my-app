@@ -1,43 +1,44 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { LayoutModule } from '@angular/cdk/layout';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatButtonModule, MatIconModule, MatListModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
+import { MatDialogModule } from '@angular/material/dialog';
+import { BrowserModule } from '@angular/platform-browser';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { SignalRConfiguration, SignalRModule } from 'ng2-signalr';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { MainNavComponent } from './main-nav/main-nav.component';
-import { LayoutModule } from '@angular/cdk/layout';
-import { MatToolbarModule, MatButtonModule, MatSidenavModule, MatIconModule, MatListModule } from '@angular/material';
-import { SignUpComponent } from './sign-up/sign-up.component';
-import { MaterialModule } from './material';
-import { LoginComponent } from './login/login.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
-import { AlertService } from './_services/alert.service';
-import { AuthenticationService } from './_services/authentication.service';
-import { UserService } from './_services/user.service';
-import { JwtInterceptor } from './_helper/jwt.interceptor';
-import { ErrorInterceptor } from './_helper/error.interceptor';
-import { AuthGuard } from './_guard/auth.guard';
-import { AlertComponent } from './_directives/alert.component';
-import { HomeComponent, ModalFormPost } from './home/home.component';
-import { GroupsComponent } from './groups/groups.component';
-import { GroupService } from './_services/group.service';
 import { BlogsComponent } from './blogs/blogs.component';
-import { MatDialogModule } from '@angular/material/dialog';
+import { ChatComponent } from './chat/chat.component';
+import { EventsComponent } from './events/events.component';
+import { ForbiddenPageComponent } from './forbidden-page/forbidden-page.component';
+import { GroupsComponent } from './groups/groups.component';
+import { HomeComponent, ModalFormPost } from './home/home.component';
+import { ListOfInvitationComponent } from './list-of-invitation/list-of-invitation.component';
+import { ListOfUserComponent } from './list-of-user/list-of-user.component';
+import { LoginComponent } from './login/login.component';
+import { MainNavComponent } from './main-nav/main-nav.component';
+import { MaterialModule } from './material';
+import { CompareValidatorDirective } from './shared/compare-validator.directive';
+import { SignUpComponent } from './sign-up/sign-up.component';
+import { AddNewMemebersDialogComponent } from './_dialogs/add-new-memebers-dialog/add-new-memebers-dialog.component';
 import { ConfirmationDialogComponent } from './_dialogs/confirmation-dialog/confirmation-dialog.component';
 import { ConfirmationService } from './_dialogs/confirmation-dialog/confirmation-service.service';
-import { ChatComponent } from './chat/chat.component';
-import { SignalrService } from './_services/signalr.service';
-
-import { SignalRModule, SignalRConfiguration } from 'ng2-signalr';
-import { ForbiddenPageComponent } from './forbidden-page/forbidden-page.component';
 import { CreateChatDialogComponent } from './_dialogs/create-chat-dialog/create-chat-dialog.component';
 import { CreatechatDialogService } from './_dialogs/create-chat-dialog/createchat-dialog.service';
-import { AddNewMemebersDialogComponent } from './_dialogs/add-new-memebers-dialog/add-new-memebers-dialog.component';
 import { CreateGroupDialogComponent } from './_dialogs/create-group-dialog/create-group-dialog.component';
-import { ListOfUserComponent } from './list-of-user/list-of-user.component';
-import { ListOfInvitationComponent } from './list-of-invitation/list-of-invitation.component';
-import { EventsComponent } from './events/events.component';
-import { EventDialogComponent } from './_dialogs/event-dialog/event-dialog.component'
+import { EventDialogComponent } from './_dialogs/event-dialog/event-dialog.component';
+import { AlertComponent } from './_directives/alert.component';
+import { AuthGuard } from './_guard/auth.guard';
+import { ErrorInterceptor } from './_helper/error.interceptor';
+import { JwtInterceptor } from './_helper/jwt.interceptor';
+import { AlertService } from './_services/alert.service';
+import { AuthenticationService } from './_services/authentication.service';
+import { GroupService } from './_services/group.service';
+import { SignalrService } from './_services/signalr.service';
+import { UserService } from './_services/user.service';
+
 
 
 export function createConfig(): SignalRConfiguration {
@@ -75,6 +76,7 @@ export function createConfig(): SignalRConfiguration {
     ListOfInvitationComponent,
     EventsComponent,
     EventDialogComponent,
+    CompareValidatorDirective,
   ],
   imports: [
     BrowserModule,

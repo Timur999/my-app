@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material';
-import { ConfirmationDialogComponent } from './confirmation-dialog.component'
-import { PostService } from '../../_services/post.service'
+import { Router } from '@angular/router';
 import { AlertService } from '../../_services/alert.service';
 import { ChatService } from '../../_services/chat.service';
-import { Router } from '@angular/router'
-import { error } from 'util';
+import { PostService } from '../../_services/post.service';
+import { ConfirmationDialogComponent } from './confirmation-dialog.component';
+import { EventsService } from '../../_services/events.service';
 
 @Injectable({
   providedIn: 'root'
@@ -15,7 +15,8 @@ export class ConfirmationService {
     private postService: PostService,
     private alertService: AlertService,
     private chatService: ChatService,
-    private router: Router) { }
+    private router: Router,
+    private eventsService: EventsService) { }
 
   openConfirmDialog(title: string, message: string, postId: number) {
 
@@ -72,6 +73,26 @@ export class ConfirmationService {
             this.alertService.success("Successful", true);
             this.chatService.UpdateChatsList(chatId);
             this.router.navigate(["./home"]);
+          },
+          error => {
+            this.alertService.error(error);
+          })
+      }
+    })
+  }
+
+  openConfirmDialogDeleteEventPost(title: string, message: string, eventId: number) {
+    const dialogRef = this.matDialog.open(ConfirmationDialogComponent);
+    dialogRef.componentInstance.title = title;
+    dialogRef.componentInstance.message = message;
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log(result)
+      if (result == true) {
+        this.eventsService.deleteEventPost(eventId).subscribe(
+          data => {
+            this.alertService.success("Successful", true);
+            this.eventsService.UpdateEventList(eventId);
           },
           error => {
             this.alertService.error(error);

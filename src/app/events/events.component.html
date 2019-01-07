@@ -30,8 +30,8 @@
               <mat-icon aria-label="Side nav toggle icon">arrow_drop_down</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
-              <button mat-menu-item (click)="EditPost(post)">Edit</button>
-                  <button mat-menu-item (click)="DeletePost(post)">Delete</button>
+              <button mat-menu-item (click)="EditEvent(event)">Edit</button>
+                  <button mat-menu-item (click)="DeleteEvent(event)">Delete</button>
             </mat-menu>
             <mat-card-title>
               {{event.EventName}}
@@ -39,7 +39,7 @@
             <mat-card-subtitle>{{event.UserName}}</mat-card-subtitle>
           </mat-card-header>
           <img mat-card-image *ngIf="event.Base64StringImage" [src]="'data:image/jpeg;base64,'+event.Base64StringImage">
-          <mat-card-content>
+          <mat-card-content  *ngIf="!event.isEdit">
             <div style="width: 80%; float: left;">
                 <p > {{event.EventDate}} </p>
             </div>
@@ -47,12 +47,40 @@
                 <p class="btn btn-success" (click)="Subscription(event)" >Subscription <span  class="badge badge-pill badge-primary">{{event.Users.length}}</span></p>
             </div>
             <div >
-            <p class="text-justify" *ngIf="!event.isEdit">
+            <p class="text-justify">
               {{event.Text}}
             </p>
           </div>
           </mat-card-content>
-
+          <mat-card *ngIf="event.isEdit">
+              <mat-card-title>Edit Post</mat-card-title>
+              <mat-card-content>
+                <form [formGroup]="EditEventForm" (ngSubmit)="OnSubmitEditForm(event)" class="example-form">
+                  <div class="form-group">
+                    <div class="form-group">
+                      <input type="file" formControlName="eventImage" (change)="onFileSelected($event)">
+                    </div>
+                    <mat-form-field class="example-full-width">
+                      <input matInput placeholder="Edit your post" formControlName="eventName" required />
+                    </mat-form-field>
+                    <div class="form-group">
+                        <mat-form-field>
+                          <textarea matInput placeholder="description" formControlName="eventText" required > </textarea>
+                        </mat-form-field>
+                      </div>
+                    <mat-form-field class="example-full-width">
+                        <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="eventDate">
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                      </mat-form-field>
+                    <button [disabled]="loading" class="btn btn-primary">Edit</button>
+                  </div>
+                  <div *ngIf="loading">
+                    <mat-progress-bar mode="query"></mat-progress-bar>
+                  </div>
+                </form>
+              </mat-card-content>
+            </mat-card>
 
         </mat-card>
 

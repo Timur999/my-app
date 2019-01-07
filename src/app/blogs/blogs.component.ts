@@ -182,7 +182,6 @@ export class BlogsComponent implements OnInit, OnDestroy {
         this.postService.putPost(this.EditPostForm.value, post.Id)
           .subscribe(
             data => {
-              console.log(data);
               var indexEditPost = this.posts.indexOf(post);
               this.posts.splice(indexEditPost,1, data);
               this.alertService.success("Successful", true);
