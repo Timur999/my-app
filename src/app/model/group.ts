@@ -5,4 +5,5 @@ export class Group {
     MembersOfGroup: string[]
     DateOfCreatedGroup?: Date
     IsAdmin?: boolean;
+    IsMember? : boolean;
 }

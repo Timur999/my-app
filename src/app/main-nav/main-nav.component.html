@@ -30,9 +30,9 @@
         <mat-divider> </mat-divider>
         <button mat-button class="btn btn-primary" (click)="openCreateGroupDialog()" >Create Group</button>
         <mat-divider> </mat-divider>
-        <a mat-list-item *ngFor="let group of groups" href="/blogs/{{group.Id}}">{{group.GroupsName}}</a>
+        <a mat-list-item *ngFor="let group of usersGroups" href="/blogs/{{group.Id}}">{{group.GroupsName}}</a>
         <mat-divider> </mat-divider>
-        <a mat-list-item href="/">Link</a>
+        <a mat-list-item href="/grouplist">Group list</a>
       </mat-expansion-panel>
       <mat-expansion-panel>
         <mat-expansion-panel-header>
@@ -46,6 +46,8 @@
         <mat-divider> </mat-divider>
         <mat-divider> </mat-divider>
         <a mat-list-item href="/events">Events</a>
+        <mat-divider> </mat-divider>
+        <a mat-list-item href="/eventlist">Event list</a>
       </mat-expansion-panel>
       <mat-expansion-panel>
         <mat-expansion-panel-header>

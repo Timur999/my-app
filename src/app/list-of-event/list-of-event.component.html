@@ -1,0 +1,45 @@
+<div class="mat-elevation-z8">
+  <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8">
+
+    <!-- Position Column -->
+    <ng-container matColumnDef="Id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> No. </th>
+      <td mat-cell *matCellDef="let element"> {{element.Id}} </td>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="EventName">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Name </th>
+      <td mat-cell *matCellDef="let element"> {{element.EventName}} </td>
+    </ng-container>
+
+    <!-- EventDate Column -->
+    <ng-container matColumnDef="EventDate">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Create date </th>
+      <td mat-cell *matCellDef="let element"> {{element.EventDate | date:'medium' }} </td>
+    </ng-container>
+
+    <!-- IsAdmin Column -->
+    <ng-container matColumnDef="IsAdmin">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Admin </th>
+      <td mat-cell *matCellDef="let element"> {{element.IsAdmin}} </td>
+    </ng-container>
+
+    <!-- IsSubscriber Column -->
+    <ng-container matColumnDef="IsSubscriber">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Are you subscriber </th>
+      <td mat-cell *matCellDef="let element"> {{element.IsSubscriber}} </td>
+    </ng-container>
+
+    <!-- SubscriberCount Column -->
+    <ng-container matColumnDef="SubscriberCount">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header> Are you subscriber </th>
+      <td mat-cell *matCellDef="let element"> {{element.Users.length}} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+  <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator>
+</div>

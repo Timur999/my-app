@@ -1,20 +1,19 @@
-import { Component, Input } from '@angular/core';
-import { RouterModule, Routes, Router } from '@angular/router';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-
-import { AlertService } from '../_services/alert.service';
-import { GroupService } from '../_services/group.service';
-import { UserService } from '../_services/user.service';
-import { ChatService } from '../_services/chat.service';
-import { CreatechatDialogService } from '../_dialogs/create-chat-dialog/createchat-dialog.service';
-import { GroupdialogService } from '../_dialogs/create-group-dialog/groupdialog.service';
-
+import { Chat } from '../model/chat';
 import { Group } from '../model/group';
 import { User } from '../model/user';
-import { Chat } from '../model/chat';
+import { CreatechatDialogService } from '../_dialogs/create-chat-dialog/createchat-dialog.service';
+import { GroupdialogService } from '../_dialogs/create-group-dialog/groupdialog.service';
+import { AlertService } from '../_services/alert.service';
+import { ChatService } from '../_services/chat.service';
+import { GroupService } from '../_services/group.service';
+import { UserService } from '../_services/user.service';
+
 
 @Component({
   selector: 'app-main-nav',
@@ -28,7 +27,7 @@ export class MainNavComponent {
   subscriptionGetChats: Subscription
 
   // @Input() token: string;
-  groups: Group[];
+  usersGroups: Group[];
   searchForm: FormGroup;
   users: User[];
   user: User;
@@ -59,7 +58,7 @@ export class MainNavComponent {
     this.getChatsCreatedByUser();   
 
     this.chats = this.chatService.usersChatList;
-    this.groups = this.groupService.userGroupList;
+    this.usersGroups = this.groupService.userGroupList;
 
     this.searchForm = this.formBuilder.group({
       username: ['', Validators.required]
@@ -83,10 +82,10 @@ export class MainNavComponent {
       data => { 
         var tempGroupList = data;
         tempGroupList.forEach(item =>
-          this.groups.push(item))
+          this.usersGroups.push(item))
         },
       error => { this.alertService.error(error); })
-    // console.log(this.groups);
+    // console.log(this.usersGroups);
   }
 
   getShortListOfUser() {

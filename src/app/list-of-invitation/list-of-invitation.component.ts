@@ -2,9 +2,7 @@ import { Component, OnInit, Input, ViewChild } from '@angular/core';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 import { InvitationService } from '../_services/invitation.service';
 import { AlertService } from '../_services/alert.service';
-
 import { Invitation } from '../model/invitation';
-import { error } from 'util';
 
 @Component({
   selector: 'app-list-of-invitation',
@@ -30,7 +28,6 @@ export class ListOfInvitationComponent implements OnInit {
   getAllInvitations() {
     this.invitationService.getAllInvitationBelongToUser().subscribe(
       data => {
-        console.log(data);
         this.invites = data;
         var index = 1;
         this.invites.forEach(element => {

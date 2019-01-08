@@ -26,7 +26,7 @@
         <mat-card class="postCard" *ngFor="let event of events">
           <mat-card-header>
             <div mat-card-avatar class="example-header-image"></div>
-            <button *ngIf="event.IsOwner" class="matButton" mat-button [matMenuTriggerFor]="menu">Menu
+            <button *ngIf="event.IsAdmin" class="matButton" mat-button [matMenuTriggerFor]="menu">Menu
               <mat-icon aria-label="Side nav toggle icon">arrow_drop_down</mat-icon>
             </button>
             <mat-menu #menu="matMenu">
@@ -41,7 +41,7 @@
           <img mat-card-image *ngIf="event.Base64StringImage" [src]="'data:image/jpeg;base64,'+event.Base64StringImage">
           <mat-card-content  *ngIf="!event.isEdit">
             <div style="width: 80%; float: left;">
-                <p > {{event.EventDate}} </p>
+                <p > {{event.EventDate | date:'medium'}} </p>
             </div>
             <div style="width: 20%; float: left;"  >
                 <p class="btn btn-success" (click)="Subscription(event)" >Subscription <span  class="badge badge-pill badge-primary">{{event.Users.length}}</span></p>
@@ -53,7 +53,7 @@
           </div>
           </mat-card-content>
           <mat-card *ngIf="event.isEdit">
-              <mat-card-title>Edit Post</mat-card-title>
+              <mat-card-title>Edit Event</mat-card-title>
               <mat-card-content>
                 <form [formGroup]="EditEventForm" (ngSubmit)="OnSubmitEditForm(event)" class="example-form">
                   <div class="form-group">
@@ -63,12 +63,12 @@
                     <mat-form-field class="example-full-width">
                       <input matInput placeholder="Edit your post" formControlName="eventName" required />
                     </mat-form-field>
-                    <div class="form-group">
-                        <mat-form-field>
+                    <div class="form-group" >
+                        <mat-form-field class="example-full-width">
                           <textarea matInput placeholder="description" formControlName="eventText" required > </textarea>
                         </mat-form-field>
                       </div>
-                    <mat-form-field class="example-full-width">
+                    <mat-form-field >
                         <input matInput [matDatepicker]="picker" placeholder="Choose a date" formControlName="eventDate">
                         <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                         <mat-datepicker #picker></mat-datepicker>

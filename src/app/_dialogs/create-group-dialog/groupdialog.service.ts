@@ -31,7 +31,7 @@ export class GroupdialogService {
       if (result == '')
         return;
 
-      this.groupList = this.groupService.grouplist;
+      this.groupList = this.groupService.userGroupList;
 
       let listOfUserId: string[] = [];
       result.users.forEach(element => {

@@ -19,6 +19,10 @@ export class EventsService {
     this.eventsObser = this.eventsSubject.asObservable();
   }
 
+  getAllEventsToListComponent(): Observable<Event[]>{
+    return this.httpClient.get<Event[]>(this.rootUrl + "/api/Events");
+  }
+
   getAllEvents(skipEventPost: number): Observable<Event[]> {
     return this.httpClient.get<Event[]>(this.rootUrl + "/api/Events/" + skipEventPost);
   }

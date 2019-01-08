@@ -11,11 +11,11 @@ export class GroupService {
 
   groupsSubject: BehaviorSubject<Group[]>
   groupsObser: Observable<Group[]>;
-  grouplist: Group[] = [];
+  usersGrouplist: Group[] = [];
 
   readonly rootUrl = "http://localhost:62747";
   constructor(private httpClient: HttpClient) {
-    this.groupsSubject = new BehaviorSubject<Group[]>(this.grouplist);
+    this.groupsSubject = new BehaviorSubject<Group[]>(this.usersGrouplist);
     this.groupsObser = this.groupsSubject.asObservable();
   }
 
@@ -26,6 +26,11 @@ export class GroupService {
   getGroupById(id: number): Observable<Group> {
     return this.httpClient.get<Group>(this.rootUrl + "/api/Groups/" + id);
   }
+
+  getGroupAll(): Observable<Group[]> {
+    return this.httpClient.get<Group[]>(this.rootUrl + "/api/Groups/");
+  }
+
 
   getUsersBelongToGroup(groupId): Observable<any> {
     return this.httpClient.get((this.rootUrl + "/api/Groups/" + groupId + "/Users"));
@@ -38,8 +43,8 @@ export class GroupService {
     }
     return this.httpClient.post<any>(this.rootUrl + "/api/Groups", body).pipe(
       map((val: Group) => {
-        this.grouplist.unshift(val);
-        this.groupsSubject.next(this.grouplist);
+        this.usersGrouplist.unshift(val);
+        this.groupsSubject.next(this.usersGrouplist);
       }
       ));
   }
@@ -58,13 +63,13 @@ export class GroupService {
   }
 
   UpdateGroupList(groupId: number) {
-    this.grouplist.forEach(element => {
+    this.usersGrouplist.forEach(element => {
       if (element.Id == groupId) {
-        var index = this.grouplist.indexOf(element);
-        this.grouplist.splice(index, 1);
+        var index = this.usersGrouplist.indexOf(element);
+        this.usersGrouplist.splice(index, 1);
       }
     });
-    this.groupsSubject.next(this.grouplist);
+    this.groupsSubject.next(this.usersGrouplist);
   }
 
 }

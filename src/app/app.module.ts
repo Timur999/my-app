@@ -38,6 +38,8 @@ import { AuthenticationService } from './_services/authentication.service';
 import { GroupService } from './_services/group.service';
 import { SignalrService } from './_services/signalr.service';
 import { UserService } from './_services/user.service';
+import { ListOfGroupComponent } from './list-of-group/list-of-group.component';
+import { ListOfEventComponent } from './list-of-event/list-of-event.component';
 
 
 
@@ -77,6 +79,9 @@ export function createConfig(): SignalRConfiguration {
     EventsComponent,
     EventDialogComponent,
     CompareValidatorDirective,
+    ListOfGroupComponent,
+    ListOfEventComponent,
+
   ],
   imports: [
     BrowserModule,

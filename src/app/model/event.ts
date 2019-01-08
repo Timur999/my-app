@@ -4,7 +4,8 @@ export class Event {
     UserName: string;
     Text: string;
     EventDate: Date;
-    IsOwner?: boolean;
+    IsAdmin?: boolean;
+    IsSubscriber?: boolean;
     ImagePath?: string;
     ImageName?: string;
     Base64StringImage?: string;
