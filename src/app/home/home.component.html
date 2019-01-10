@@ -1,7 +1,7 @@
 <div id="container">
   <!-- Button trigger modal -->
   <mat-toolbar class="optionsContainerBar" color="primary">
-    <span>My Application</span>
+    <span>Home</span>
     <div class="containerForNavButton" *ngIf="!(isHandset$ | async)">
       <button mat-button (click)="openDialog()">
         <mat-icon>message</mat-icon>
@@ -27,7 +27,6 @@
   <div class="container">
     <div class="row">
       <div class="col-9">
-        2 of 3 (wider)
         <mat-card class="postCard" *ngFor="let post of posts">
           <mat-card-header>
             <div mat-card-avatar class="example-header-image"></div>
@@ -117,7 +116,6 @@
       <div class="col">
 
 
-        3 of 3
       </div>
     </div>
   </div>

@@ -1,7 +1,7 @@
 <div id="container">
   <!-- Button trigger modal -->
   <mat-toolbar class="optionsContainerBar" color="primary">
-    <span>My Application</span>
+    <span>Group component</span>
     <div class="containerForNavButton" *ngIf="!(isHandset$ | async)">
       <button mat-button (click)="openDialog()">
         <mat-icon>message</mat-icon>
@@ -51,9 +51,7 @@
       </mat-menu>
     </button>
   </mat-toolbar>
-
   <app-list-of-user *ngIf="showListOfUserComponent" [blogId]="blogId"></app-list-of-user>
-
   <div class="jumbotron">
     <h2 class="display-4">Welcome, {{groupsName}}!</h2>
     <hr class="my-4">
@@ -62,7 +60,7 @@
   <div class="container">
     <div class="row">
       <div class="col-9">
-        2 of 3 (wider)
+
         <mat-card class="postCard" *ngFor="let post of posts">
           <mat-card-header>
             <div mat-card-avatar class="example-header-image"></div>
@@ -150,7 +148,7 @@
       <div class="col">
 
 
-        3 of 3
+
       </div>
     </div>
   </div>

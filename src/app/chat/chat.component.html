@@ -45,11 +45,11 @@
       <ul class="chat">
         <li class="left clearfix">
           <span class="chat-img pull-left">
-            <img src="http://lorempixel.com/60/60/people/8" alt="User Avatar" class="img-circle">
+            <img src="https://image.shutterstock.com/image-photo/young-woman-runner-running-on-450w-359568020.jpg" alt="User Avatar" class="img-circle" style="width: 60px; height: 60px;">
           </span>
           <div class="chat-body clearfix">
             <div class="header">
-              <strong class="primary-font">Jack Sparrow</strong>
+              <strong class="primary-font">Jan Kowalski</strong>
               <small class="pull-right text-muted">
                 <i class="fa fa-clock-o fa-fw"></i> 12 mins ago
               </small>
@@ -63,13 +63,13 @@
       [ngStyle] = "{'text-align':currentUserName == message.SenderName ? 'left' : 'right'}" -->
         <li *ngFor="let message of messages" [ngClass]="currentUserName != message.SenderName ? 'chatMessageList' : ''">
           <span class="chat-img pull-right">
-            <img src="http://lorempixel.com/60/60/people/9" alt="User Avatar" class="img-circle">
+              <img src="https://cdn.pixabay.com/photo/2016/09/30/16/42/running-1705716_960_720.jpg" alt="User Avatar" class="img-circle" style="width: 60px; height: 60px;">
           </span>
           <div class="chat-body clearfix">
             <div class="header">
+                <strong class="pull-right primary-font">{{ message.SenderName }}</strong>
               <small class=" text-muted">
-                <i class="fa fa-clock-o fa-fw"></i> TODO: It could do some timer and observator to var</small>
-              <strong class="pull-right primary-font">{{ message.SenderName }}</strong>
+                <i class="fa fa-clock-o fa-fw"></i> 13 mins ago</small>
             </div>
             <p>
               {{ message.MessageText }}

@@ -1,0 +1,7 @@
+{
+    "appService.defaultWebAppToDeploy": "",
+    "appService.deploySubpath": "",
+    "appService.zipIgnorePattern": [
+        "node_modules{,/**}"
+    ]
+}
