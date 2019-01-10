@@ -58,7 +58,7 @@ export class BlogsComponent implements OnInit, OnDestroy {
   editPostId: number;
   isAdminGroup: boolean = false;
   showListOfUserComponent: boolean = false;
-
+  groupsName: string
   commentsList: Comment[] = [];
   commentMessage: string;
   currentUserName: string;
@@ -102,6 +102,7 @@ export class BlogsComponent implements OnInit, OnDestroy {
   getGroupInfo() {
     this.groupService.getGroupById(this.blogId).subscribe(
       data => {
+        this.groupsName = data.GroupsName;
         this.isAdminGroup = data.IsAdmin;
       },
       error => { console.log(error + " while get group info") }
@@ -114,7 +115,7 @@ export class BlogsComponent implements OnInit, OnDestroy {
     this.subscriptionGet = this.postService.getNextTenPostBelongToGroup(this.blogId, event.pageIndex).subscribe(
       data => {
         this.posts.length = 0;
-       var tempChatsList = data;
+        var tempChatsList = data;
         tempChatsList.forEach(element => {
           this.posts.push(element);
         });
@@ -183,7 +184,7 @@ export class BlogsComponent implements OnInit, OnDestroy {
           .subscribe(
             data => {
               var indexEditPost = this.posts.indexOf(post);
-              this.posts.splice(indexEditPost,1, data);
+              this.posts.splice(indexEditPost, 1, data);
               this.alertService.success("Successful", true);
               this.loading = false;
               post.isEdit = false;
@@ -220,10 +221,10 @@ export class BlogsComponent implements OnInit, OnDestroy {
 
   getCommentList() {
     this.commentService.getCommentsByGroup(this.blogId).subscribe(
-      data => { 
+      data => {
         this.commentsList = data;
         console.log(data)
-       },
+      },
       error => { console.log(error) }
     );
   }

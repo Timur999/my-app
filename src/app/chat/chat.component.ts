@@ -1,19 +1,15 @@
-import { Component, OnInit, Input, OnDestroy } from '@angular/core';
-import { SignalrService } from '../_services/signalr.service';
-import { ActivatedRoute } from '@angular/router';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Observable, Subscription } from 'rxjs';
 import { map } from 'rxjs/operators';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { Router } from '@angular/router'
-import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-
-import { ChatService } from '../_services/chat.service';
+import { Chat } from '../model/chat';
+import { Message } from '../model/message';
 import { ConfirmationService } from '../_dialogs/confirmation-dialog/confirmation-service.service';
 import { CreatechatDialogService } from '../_dialogs/create-chat-dialog/createchat-dialog.service';
-
-import { Message } from '../model/message';
-import { error } from 'util';
-import { Chat } from '../model/chat';
+import { ChatService } from '../_services/chat.service';
+import { SignalrService } from '../_services/signalr.service';
 
 
 @Component({

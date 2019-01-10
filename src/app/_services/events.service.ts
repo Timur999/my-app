@@ -9,7 +9,7 @@ import { map } from 'rxjs/operators';
 })
 export class EventsService {
 
-  readonly rootUrl = "http://localhost:62747";
+  readonly rootUrl = "http://trletsrun.azurewebsites.net";
   eventsSubject: BehaviorSubject<Event[]>
   eventsObser: Observable<Event[]>;
   eventlist: Event[] = [];

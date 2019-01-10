@@ -14,7 +14,8 @@ export class PostService {
   postsObser: Observable<Post[]>;
   postlist: Post[] = [];
 
-  readonly rootUrl = "http://localhost:62747";
+  //"http://localhost:62747"
+  readonly rootUrl = "http://trletsrun.azurewebsites.net";
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' })
   };
@@ -46,7 +47,7 @@ export class PostService {
     formData.append("Text", formField.userMessage);
     formData.append("BlogId", blogId.toString());
 
-    return this.httpClient.post<any>(this.rootUrl + "/api/PostImage", formData).pipe(map((val: Post ) => {
+    return this.httpClient.post<any>(this.rootUrl + "/api/PostImageToAzure", formData).pipe(map((val: Post ) => {
       this.postlist.unshift(val);
       this.postsSubject.next(this.postlist);
       console.log(this.postlist);

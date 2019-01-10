@@ -1,10 +1,8 @@
 import { Injectable } from '@angular/core';
-import { SignalR, SignalRConnection, ConnectionStatus, BroadcastEventListener } from 'ng2-signalr';
-import { BehaviorSubject, Observable, of } from 'rxjs';
-
-import { UserService } from './user.service';
-
+import { BroadcastEventListener, SignalR, SignalRConnection } from 'ng2-signalr';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { Message } from '../model/message';
+import { UserService } from './user.service';
 
 
 @Injectable({

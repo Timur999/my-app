@@ -8,7 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class CommentService {
 
-  readonly rootUrl = "http://localhost:62747";
+  readonly rootUrl = "http://trletsrun.azurewebsites.net";
   constructor(private httpClient: HttpClient) { }
 
   getCommentsByGroup(groupId: number): Observable<Comment[]> {

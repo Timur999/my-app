@@ -9,7 +9,7 @@ import { User } from '../model/user'
 })
 export class AuthenticationService {
 
-    readonly rootUrl = "http://localhost:62747";
+    readonly rootUrl = "http://trletsrun.azurewebsites.net";
     public currentUserSubject: BehaviorSubject<string>;
     public currentUser: Observable<string>;
 

@@ -13,7 +13,7 @@ export class GroupService {
   groupsObser: Observable<Group[]>;
   usersGrouplist: Group[] = [];
 
-  readonly rootUrl = "http://localhost:62747";
+  readonly rootUrl = "http://trletsrun.azurewebsites.net";
   constructor(private httpClient: HttpClient) {
     this.groupsSubject = new BehaviorSubject<Group[]>(this.usersGrouplist);
     this.groupsObser = this.groupsSubject.asObservable();
