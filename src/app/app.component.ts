@@ -13,8 +13,8 @@ import { Subscription } from 'rxjs';
 export class AppComponent implements OnInit, OnDestroy {
 
   subscription:Subscription;
-  constructor(private authenticationService: AuthenticationService,
-    private router: Router) { }
+  constructor(public authenticationService: AuthenticationService,
+    public router: Router) { }
 
   ngOnInit() {
     this.subscription = this.router.events.pipe(
