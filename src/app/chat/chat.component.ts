@@ -37,7 +37,7 @@ export class ChatComponent implements OnInit {
       map(result => result.matches)
     );
 
-  constructor(private route: ActivatedRoute,
+  constructor(public route: ActivatedRoute,
     public signalrService: SignalrService,
     public chatService: ChatService,
     public formBuilder: FormBuilder,

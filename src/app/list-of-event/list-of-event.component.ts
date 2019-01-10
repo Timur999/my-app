@@ -17,8 +17,8 @@ export class ListOfEventComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  constructor(private eventsService: EventsService,
-    private alertService: AlertService) { }
+  constructor(public eventsService: EventsService,
+    public alertService: AlertService) { }
 
   ngOnInit() {
     this.getAllEvents();

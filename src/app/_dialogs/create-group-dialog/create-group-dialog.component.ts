@@ -21,7 +21,7 @@ export class CreateGroupDialogComponent implements OnInit {
   @Input() message: string;
 
   constructor(public matDialogRef: MatDialogRef<CreateGroupDialogComponent>,
-    private fb: FormBuilder, 
+    public fb: FormBuilder, 
     public userService: UserService) { }
 
   ngOnInit() {

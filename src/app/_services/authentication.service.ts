@@ -18,7 +18,7 @@ export class AuthenticationService {
             'Accept': '*/*'
         })
     };
-    constructor(private http: HttpClient) {
+    constructor(public http: HttpClient) {
         this.currentUserSubject = new BehaviorSubject<string>(JSON.parse(sessionStorage.getItem("tokenKey")));
         this.currentUser = this.currentUserSubject.asObservable();
     }

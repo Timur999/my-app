@@ -22,7 +22,7 @@ export class CreateChatDialogComponent implements OnInit {
   userList: User[];
 
   constructor(public matDialogRef: MatDialogRef<CreateChatDialogComponent>,
-    private fb: FormBuilder,
+    public fb: FormBuilder,
     public userService: UserService) { }
 
   ngOnInit() {

@@ -44,13 +44,13 @@ export class HomeComponent implements OnInit {
       map(result => result.matches)
     );
 
-  constructor(private postService: PostService,
-    private formBuilder: FormBuilder,
-    private alertService: AlertService,
-    private breakpointObserver: BreakpointObserver,
+  constructor(public postService: PostService,
+    public formBuilder: FormBuilder,
+    public alertService: AlertService,
+    public breakpointObserver: BreakpointObserver,
     public matDialog: MatDialog,
-    private confirmationService: ConfirmationService,
-    private commentService: CommentService) { }
+    public confirmationService: ConfirmationService,
+    public commentService: CommentService) { }
 
   ngOnInit() {
     this.EditPostForm = this.formBuilder.group({
@@ -216,7 +216,7 @@ export class ModalFormPost implements OnInit {
   post: Post;
   userMessage: string;
   userImage: File;
-  constructor(private fb: FormBuilder,
+  constructor(public fb: FormBuilder,
     public dialogRef: MatDialogRef<ModalFormPost>) { }
 
   ngOnInit() {

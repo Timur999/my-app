@@ -14,7 +14,7 @@ export class GroupService {
   usersGrouplist: Group[] = [];
 
   readonly rootUrl = "http://trletsrun.azurewebsites.net";
-  constructor(private httpClient: HttpClient) {
+  constructor(public httpClient: HttpClient) {
     this.groupsSubject = new BehaviorSubject<Group[]>(this.usersGrouplist);
     this.groupsObser = this.groupsSubject.asObservable();
   }

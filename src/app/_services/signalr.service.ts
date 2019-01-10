@@ -15,9 +15,9 @@ export class SignalrService {
     messages: Message[] = [];
     message: Message;
 
-    private _connection: SignalRConnection;
+    public _connection: SignalRConnection;
     onMessageSent$: BroadcastEventListener<Message>;
-    constructor(private _signalR: SignalR, private userService: UserService) {
+    constructor(public _signalR: SignalR, public userService: UserService) {
         this.currentUserName = sessionStorage.getItem("userName");
         this.messagesSubject = new BehaviorSubject<Message[]>(this.messages);
     }

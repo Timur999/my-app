@@ -8,10 +8,10 @@ import { AlertService } from '../_services/alert.service';
 })
 
 export class AlertComponent implements OnInit, OnDestroy {
-    private subscription: Subscription;
+    public subscription: Subscription;
     message: any;
 
-    constructor(private alertService: AlertService) { }
+    constructor(public alertService: AlertService) { }
 
     ngOnInit() {
         this.subscription = this.alertService.getMessage().subscribe(message => { 

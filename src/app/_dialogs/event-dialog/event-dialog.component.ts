@@ -14,7 +14,7 @@ export class EventDialogComponent implements OnInit {
   createEventForm: FormGroup;
   image: File;
   loading = false;
-  constructor(private fb: FormBuilder,
+  constructor(public fb: FormBuilder,
     public matDialogRef: MatDialogRef<EventDialogComponent>) { }
 
   ngOnInit() {

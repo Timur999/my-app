@@ -8,7 +8,7 @@ import { User } from '../model/user';
 export class UserService {
     readonly rootUrl = "http://trletsrun.azurewebsites.net";
 
-    constructor(private http: HttpClient) { }
+    constructor(public http: HttpClient) { }
 
     getAll() {
         return this.http.get<User[]>(`/users`);

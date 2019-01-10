@@ -21,8 +21,8 @@ export class GroupdialogService {
   constructor(public matDialog: MatDialog,
     public groupService: GroupService,
     public invitationService: InvitationService,
-    private alertService: AlertService,
-    private router: Router) { }
+    public alertService: AlertService,
+    public router: Router) { }
 
   openCreateGroupDialog(title: string, message: string) {
     const dialogRef = this.matDialog.open(CreateGroupDialogComponent);

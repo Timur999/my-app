@@ -14,7 +14,7 @@ export class EventsService {
   eventsObser: Observable<Event[]>;
   eventlist: Event[] = [];
 
-  constructor(private httpClient: HttpClient) {
+  constructor(public httpClient: HttpClient) {
     this.eventsSubject = new BehaviorSubject<Event[]>(this.eventlist);
     this.eventsObser = this.eventsSubject.asObservable();
   }

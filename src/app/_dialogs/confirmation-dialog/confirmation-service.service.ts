@@ -12,11 +12,11 @@ import { EventsService } from '../../_services/events.service';
 })
 export class ConfirmationService {
   constructor(public matDialog: MatDialog,
-    private postService: PostService,
-    private alertService: AlertService,
-    private chatService: ChatService,
-    private router: Router,
-    private eventsService: EventsService) { }
+    public postService: PostService,
+    public alertService: AlertService,
+    public chatService: ChatService,
+    public router: Router,
+    public eventsService: EventsService) { }
 
   openConfirmDialog(title: string, message: string, postId: number) {
 

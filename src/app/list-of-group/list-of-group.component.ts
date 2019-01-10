@@ -17,8 +17,8 @@ export class ListOfGroupComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
-  constructor(private groupService: GroupService,
-    private alertService: AlertService) { }
+  constructor(public groupService: GroupService,
+    public alertService: AlertService) { }
 
 
   ngOnInit() { 

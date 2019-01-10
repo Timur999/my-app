@@ -26,7 +26,7 @@ export class PostService {
     })
   }
 
-  constructor(private httpClient: HttpClient) {
+  constructor(public httpClient: HttpClient) {
     this.postsSubject = new BehaviorSubject<Post[]>(this.postlist);
     this.postsObser = this.postsSubject.asObservable();
    }

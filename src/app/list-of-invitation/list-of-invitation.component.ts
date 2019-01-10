@@ -18,8 +18,8 @@ export class ListOfInvitationComponent implements OnInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
 
-  constructor(private invitationService: InvitationService,
-    private alertService: AlertService) { }
+  constructor(public invitationService: InvitationService,
+    public alertService: AlertService) { }
 
   ngOnInit() {
     this.getAllInvitations();

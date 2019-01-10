@@ -41,13 +41,13 @@ export class MainNavComponent {
       map(result => result.matches)
     );
 
-  constructor(private breakpointObserver: BreakpointObserver,
-    private groupService: GroupService,
-    private alertService: AlertService,
-    private userService: UserService,
-    private createchatDialogService: CreatechatDialogService,
-    private groupdialogService: GroupdialogService,
-    private formBuilder: FormBuilder,
+  constructor(public breakpointObserver: BreakpointObserver,
+    public groupService: GroupService,
+    public alertService: AlertService,
+    public userService: UserService,
+    public createchatDialogService: CreatechatDialogService,
+    public groupdialogService: GroupdialogService,
+    public formBuilder: FormBuilder,
     public chatService: ChatService,
     public router: Router) {
   }

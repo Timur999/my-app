@@ -18,7 +18,7 @@ export class ChatService {
   };
 
   readonly rootUrl = "http://trletsrun.azurewebsites.net";
-  constructor(private httpClient: HttpClient) {
+  constructor(public httpClient: HttpClient) {
     this.chatsCreatedByUserSubject = new BehaviorSubject<Chat[]>(this.chatlist);
     this.chatsCreatedByUserObser = this.chatsCreatedByUserSubject.asObservable();
   }

@@ -17,7 +17,7 @@ export class ListOfUserComponent implements OnInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
 
-  constructor(private groupService: GroupService) { }
+  constructor(public groupService: GroupService) { }
 
   ngOnInit() {
     this.getListOfUserBelongToGroup();

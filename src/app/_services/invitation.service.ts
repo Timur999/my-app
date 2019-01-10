@@ -9,7 +9,7 @@ import { Invitation } from '../model/invitation';
 export class InvitationService {
 
   readonly rootUrl = "http://trletsrun.azurewebsites.net";
-  constructor(private httpClient: HttpClient) { }
+  constructor(public httpClient: HttpClient) { }
 
   postInvitation(invitationList: Invitation[]): Observable<any> {
     return this.httpClient.post(this.rootUrl + "/api/Invitations", invitationList);

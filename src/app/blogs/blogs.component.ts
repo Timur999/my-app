@@ -68,16 +68,16 @@ export class BlogsComponent implements OnInit, OnDestroy {
       map(result => result.matches)
     );
 
-  constructor(private postService: PostService,
-    private formBuilder: FormBuilder,
-    private alertService: AlertService,
-    private breakpointObserver: BreakpointObserver,
-    private matDialog: MatDialog,
-    private confirmationService: ConfirmationService,
-    private route: ActivatedRoute,
-    private groupService: GroupService,
-    private groupdialogService: GroupdialogService,
-    private commentService: CommentService) { }
+  constructor(public postService: PostService,
+    public formBuilder: FormBuilder,
+    public alertService: AlertService,
+    public breakpointObserver: BreakpointObserver,
+    public matDialog: MatDialog,
+    public confirmationService: ConfirmationService,
+    public route: ActivatedRoute,
+    public groupService: GroupService,
+    public groupdialogService: GroupdialogService,
+    public commentService: CommentService) { }
 
   ngOnInit() {
     this.EditPostForm = this.formBuilder.group({

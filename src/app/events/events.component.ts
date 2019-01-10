@@ -30,12 +30,12 @@ export class EventsComponent implements OnInit {
     .pipe(
       map(result => result.matches)
     );
-  constructor(private breakpointObserver: BreakpointObserver,
-    private eventDialogService: EventDialogService,
-    private eventsService: EventsService,
-    private alertService: AlertService,
+  constructor(public breakpointObserver: BreakpointObserver,
+    public eventDialogService: EventDialogService,
+    public eventsService: EventsService,
+    public alertService: AlertService,
     public fb: FormBuilder,
-    private confirmationService: ConfirmationService ) { }
+    public confirmationService: ConfirmationService ) { }
 
   ngOnInit() {
     this.EditEventForm = this.fb.group({
