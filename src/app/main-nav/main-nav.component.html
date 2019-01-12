@@ -1,8 +1,9 @@
 <mat-toolbar class="matToolbar" color="primary" [class.mat-elevation-z9]="true">
-  <button type="button" class="ToggleSidenav" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()" *ngIf="isHandset$ | async">
+  <button type="button" class="ToggleSidenav" aria-label="Toggle sidenav" mat-icon-button (click)="drawer.toggle()"
+    *ngIf="isHandset$ | async">
     <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
   </button>
-  <a mat-list-item href="/Home"><span>my-app</span></a>
+  <a mat-list-item href="/Home"><span>Runner</span></a>
   <span class="spacer"></span>
   <a mat-list-item href="/invitations">Invitation</a>
   <a mat-list-item href="#">Options</a>
@@ -12,7 +13,7 @@
 
 <mat-sidenav-container class="example-container">
   <mat-sidenav-container>
-    <mat-toolbar>My App</mat-toolbar>
+    <mat-toolbar>Runner</mat-toolbar>
   </mat-sidenav-container>
   <mat-sidenav #drawer class="sidenav" mode="side" opened fixedInViewport="false" [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
     [mode]="(isHandset$ | async) ? 'over' : 'side'" [opened]="!(isHandset$ | async)">
@@ -28,9 +29,11 @@
           </mat-panel-description>
         </mat-expansion-panel-header>
         <mat-divider> </mat-divider>
-        <button mat-button class="btn btn-primary" (click)="openCreateGroupDialog()" >Create Group</button>
+        <button mat-button class="btn btn-primary" (click)="openCreateGroupDialog()">Create Group</button>
         <mat-divider> </mat-divider>
-        <a mat-list-item *ngFor="let group of usersGroups" href="/blogs/{{group.Id}}">{{group.GroupsName}}</a>
+        <div *ngFor="let group of usersGroups">
+          <a mat-list-item *ngIf="group.Id == 1" href="/blogs/{{group.Id}}">{{group.GroupsName}}</a>
+        </div>
         <mat-divider> </mat-divider>
         <a mat-list-item href="/grouplist">Group list</a>
       </mat-expansion-panel>
@@ -73,23 +76,23 @@
         <mat-divider> </mat-divider>
       </mat-expansion-panel>
       <mat-expansion-panel>
-          <mat-divider> </mat-divider>
-          <button mat-button class="btn btn-primary" (click)="createNewChat()">Create chat/group chat</button>
-          <mat-divider> </mat-divider>
-          <mat-expansion-panel-header>
-            <mat-panel-title>
-              My Chats
-            </mat-panel-title>
-            <mat-panel-description>
-              <!-- This is a summary of the content -->
-            </mat-panel-description>
-          </mat-expansion-panel-header>
-          <mat-divider> </mat-divider>
-          <mat-divider> </mat-divider>
-          <div *ngFor="let chat of chats">
-            <a mat-list-item href="/chat/{{chat.Id}}"> {{chat.ChatName}} </a>
-          </div>
-        </mat-expansion-panel>
+        <mat-divider> </mat-divider>
+        <button mat-button class="btn btn-primary" (click)="createNewChat()">Create chat/group chat</button>
+        <mat-divider> </mat-divider>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            My Chats
+          </mat-panel-title>
+          <mat-panel-description>
+            <!-- This is a summary of the content -->
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+        <mat-divider> </mat-divider>
+        <mat-divider> </mat-divider>
+        <div *ngFor="let chat of chats">
+          <a mat-list-item href="/chat/{{chat.Id}}"> {{chat.ChatName}} </a>
+        </div>
+      </mat-expansion-panel>
     </mat-nav-list>
   </mat-sidenav>
   <mat-sidenav-content>
