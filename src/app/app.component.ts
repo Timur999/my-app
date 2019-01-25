@@ -1,9 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { AuthenticationService } from './_services/authentication.service'
-import { Observable } from 'rxjs';
-import { Router, NavigationEnd } from '@angular/router'
-import { filter } from 'rxjs/operators'
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { filter } from 'rxjs/operators';
+import { AuthenticationService } from './_services/authentication.service';
 
 @Component({
   selector: 'app-root',

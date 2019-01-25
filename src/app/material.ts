@@ -1,10 +1,10 @@
 import { NgModule } from '@angular/core';
-import { MatNativeDateModule } from '@angular/material';
+import { MatButtonModule, MatIconModule, MatListModule, MatNativeDateModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
 import { MatBadgeModule } from '@angular/material/badge';
 import { MatBottomSheetModule } from '@angular/material/bottom-sheet';
-import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -31,7 +31,13 @@ import { MatTableModule } from '@angular/material/table';
         MatDatepickerModule,
         MatNativeDateModule,
         MatBadgeModule,
-        MatSortModule
+        MatSortModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
+        MatDialogModule,
     ],
     exports: [
         MatFormFieldModule,
@@ -48,7 +54,13 @@ import { MatTableModule } from '@angular/material/table';
         MatDatepickerModule,
         MatNativeDateModule,
         MatBadgeModule,
-        MatSortModule
+        MatSortModule,
+        MatToolbarModule,
+        MatButtonModule,
+        MatSidenavModule,
+        MatIconModule,
+        MatListModule,
+        MatDialogModule,
     ],
 })
 

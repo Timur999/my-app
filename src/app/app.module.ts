@@ -2,8 +2,6 @@ import { LayoutModule } from '@angular/cdk/layout';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatButtonModule, MatIconModule, MatListModule, MatSidenavModule, MatToolbarModule } from '@angular/material';
-import { MatDialogModule } from '@angular/material/dialog';
 import { BrowserModule } from '@angular/platform-browser';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { SignalRConfiguration, SignalRModule } from 'ng2-signalr';
@@ -15,6 +13,8 @@ import { EventsComponent } from './events/events.component';
 import { ForbiddenPageComponent } from './forbidden-page/forbidden-page.component';
 import { GroupsComponent } from './groups/groups.component';
 import { HomeComponent, ModalFormPost } from './home/home.component';
+import { ListOfEventComponent } from './list-of-event/list-of-event.component';
+import { ListOfGroupComponent } from './list-of-group/list-of-group.component';
 import { ListOfInvitationComponent } from './list-of-invitation/list-of-invitation.component';
 import { ListOfUserComponent } from './list-of-user/list-of-user.component';
 import { LoginComponent } from './login/login.component';
@@ -38,9 +38,6 @@ import { AuthenticationService } from './_services/authentication.service';
 import { GroupService } from './_services/group.service';
 import { SignalrService } from './_services/signalr.service';
 import { UserService } from './_services/user.service';
-import { ListOfGroupComponent } from './list-of-group/list-of-group.component';
-import { ListOfEventComponent } from './list-of-event/list-of-event.component';
-
 
 
 export function createConfig(): SignalRConfiguration {
@@ -80,24 +77,17 @@ export function createConfig(): SignalRConfiguration {
     EventDialogComponent,
     CompareValidatorDirective,
     ListOfGroupComponent,
-    ListOfEventComponent,
-
+    ListOfEventComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     LayoutModule,
-    MatToolbarModule,
-    MatButtonModule,
-    MatSidenavModule,
-    MatIconModule,
-    MatListModule,
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    MatDialogModule,
     SignalRModule.forRoot(createConfig)
   ],
   entryComponents: [
@@ -108,7 +98,6 @@ export function createConfig(): SignalRConfiguration {
     ChatComponent, AddNewMemebersDialogComponent,
     HomeComponent, CreateGroupDialogComponent,
     EventsComponent, EventDialogComponent,
-
   ],
   providers: [
     AuthGuard,
