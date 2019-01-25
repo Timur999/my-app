@@ -32,7 +32,7 @@
         <button mat-button class="btn btn-primary" (click)="openCreateGroupDialog()">Create Group</button>
         <mat-divider> </mat-divider>
         <div *ngFor="let group of usersGroups">
-          <a mat-list-item *ngIf="group.Id == 1" href="/blogs/{{group.Id}}">{{group.GroupsName}}</a>
+          <a mat-list-item *ngIf="group.Id != 1" href="/blogs/{{group.Id}}">{{group.GroupsName}}</a>
         </div>
         <mat-divider> </mat-divider>
         <a mat-list-item href="/grouplist">Group list</a>

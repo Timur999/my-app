@@ -46,7 +46,7 @@ import { ListOfEventComponent } from './list-of-event/list-of-event.component';
 export function createConfig(): SignalRConfiguration {
   const c = new SignalRConfiguration();
   c.hubName = 'NotifyHub';
-  // c.qs = { user: 'donald' };
+  // c.qs = { user: 'Jan Kowalski' };
   c.url = 'http://trletsrun.azurewebsites.net';
   c.logging = true;
 
