@@ -1,20 +1,19 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
-import { PostService } from '../_services/post.service'
-import { AlertService } from '../_services/alert.service'
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { Post } from '../model/post';
-import { first, map } from 'rxjs/operators';
-import { Observable, Subscription, from } from 'rxjs';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { PageEvent } from '@angular/material';
-import { MatDialog, MatDialogRef } from '@angular/material';
-import { ConfirmationService } from '../_dialogs/confirmation-dialog/confirmation-service.service'
-import { Router, ActivatedRoute } from '@angular/router';
-import { ModalFormPost } from '../home/home.component'
-import { GroupService } from '../_services/group.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { MatDialog } from '@angular/material';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
+import { first, map } from 'rxjs/operators';
+import { ModalFormPost } from '../home/home.component';
+import { Comment } from '../model/comment';
+import { Post } from '../model/post';
+import { ConfirmationService } from '../_dialogs/confirmation-dialog/confirmation-service.service';
 import { GroupdialogService } from '../_dialogs/create-group-dialog/groupdialog.service';
-import { Comment } from '../model/comment'
-import { CommentService } from '../_services/comment.service'
+import { AlertService } from '../_services/alert.service';
+import { CommentService } from '../_services/comment.service';
+import { GroupService } from '../_services/group.service';
+import { PostService } from '../_services/post.service';
 
 // export interface DialogData {
 //   text: string;

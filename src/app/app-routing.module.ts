@@ -24,7 +24,7 @@ const routes: Routes = [
   { path: 'invitations', component: ListOfInvitationComponent, canActivate: [AuthGuard] },
   { path: 'events', component: EventsComponent, canActivate: [AuthGuard] },
   { path: 'forbidden', component: ForbiddenPageComponent },
-  { path: '**', component: HomeComponent }
+  { path: '**', component: HomeComponent, canActivate: [AuthGuard]  }
 ];
 
 @NgModule({

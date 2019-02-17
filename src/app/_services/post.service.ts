@@ -1,9 +1,8 @@
-import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { Injectable } from '@angular/core';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Post } from '../model/post';
-import { Message } from '../model/message'
 
 @Injectable({
   providedIn: 'root'
@@ -50,7 +49,7 @@ export class PostService {
     return this.httpClient.post<any>(this.rootUrl + "/api/PostImageToAzure", formData).pipe(map((val: Post ) => {
       this.postlist.unshift(val);
       this.postsSubject.next(this.postlist);
-      console.log(this.postlist);
+     // console.log(this.postlist);
     }));;
   }
 

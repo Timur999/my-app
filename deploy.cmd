@@ -114,8 +114,9 @@ REM )
 
 REM :: 4. KuduSync
 REM IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
-REM   echo Siema elo
-REM   call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_SOURCE%\dist\my-app" -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" -i ".git;.hg;.deployment;deploy.cmd"
+REM   call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_SOURCE%\dist\my-app" 
+REM   -t "%DEPLOYMENT_TARGET%" -n "%NEXT_MANIFEST_PATH%" -p "%PREVIOUS_MANIFEST_PATH%" 
+REM   -i ".git;.hg;.deployment;deploy.cmd"
 REM   IF !ERRORLEVEL! NEQ 0 goto error
 REM )
 
