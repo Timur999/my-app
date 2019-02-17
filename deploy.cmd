@@ -103,6 +103,7 @@ REM )
 
 REM :: 3. Angular Prod Build
 REM IF EXIST "%DEPLOYMENT_SOURCE%/.angular.json" (
+REM echo Timon was here  
 REM echo Building App in %DEPLOYMENT_SOURCE%…
 REM pushd "%DEPLOYMENT_SOURCE%"
 REM call :ExecuteCmd !NPM_CMD! run build
