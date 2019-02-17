@@ -18,7 +18,7 @@ import { PostService } from '../_services/post.service';
 // export interface DialogData {
 //   text: string;
 //   name: string;
-//   email: string;
+//    email: string; 
 // }
 
 // const COMMENT: Comment[] = [
