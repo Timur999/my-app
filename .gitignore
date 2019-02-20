@@ -40,4 +40,4 @@ Thumbs.db
 
 
 # Untracked files:
-**/model/root.ts
+*.root.ts
