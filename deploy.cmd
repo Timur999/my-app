@@ -14,7 +14,7 @@ IF %ERRORLEVEL% NEQ 0 (
   echo Missing node.js executable, please install node.js, if already installed make sure it can be reached from current environment.
   goto error
 )
-
+REM start
 :: Setup
 :: -----
 
@@ -25,7 +25,7 @@ SET ARTIFACTS=%~dp0%..\artifacts
 IF NOT DEFINED DEPLOYMENT_SOURCE (
   SET DEPLOYMENT_SOURCE=%~dp0%.
 )
-
+REM 1
 IF NOT DEFINED DEPLOYMENT_TARGET (
   SET DEPLOYMENT_TARGET=%ARTIFACTS%\wwwroot
 )
@@ -37,7 +37,7 @@ IF NOT DEFINED NEXT_MANIFEST_PATH (
     SET PREVIOUS_MANIFEST_PATH=%ARTIFACTS%\manifest
   )
 )
-
+REM 2
 IF NOT DEFINED KUDU_SYNC_CMD (
   :: Install kudu sync
   echo Installing Kudu Sync
@@ -63,7 +63,7 @@ IF DEFINED KUDU_SELECT_NODE_VERSION_CMD (
     SET /p NODE_EXE=<"%DEPLOYMENT_TEMP%\__nodeVersion.tmp"
     IF !ERRORLEVEL! NEQ 0 goto error
   )
-  
+REM 3  
   IF EXIST "%DEPLOYMENT_TEMP%\__npmVersion.tmp" (
     SET /p NPM_JS_PATH=<"%DEPLOYMENT_TEMP%\__npmVersion.tmp"
     IF !ERRORLEVEL! NEQ 0 goto error
@@ -72,7 +72,7 @@ IF DEFINED KUDU_SELECT_NODE_VERSION_CMD (
   IF NOT DEFINED NODE_EXE (
     SET NODE_EXE=node
   )
-
+REM 4
   SET NPM_CMD="!NODE_EXE!" "!NPM_JS_PATH!"
 ) ELSE (
   SET NPM_CMD=npm
@@ -89,7 +89,7 @@ goto :EOF
 echo Handling node.js deployment.
 
 
-
+REM 5 selectnode
 :: 1. Select node version
 call :SelectNodeVersion
 
@@ -100,7 +100,7 @@ IF EXIST "%DEPLOYMENT_SOURCE%\package.json" (
   IF !ERRORLEVEL! NEQ 0 goto error
   popd
 )
-
+REM 6
 :: 3. Angular Prod Build
 IF EXIST "%DEPLOYMENT_SOURCE%/.angular.json" (
 echo Building App in %DEPLOYMENT_SOURCE%…
@@ -111,7 +111,7 @@ call :ExecuteCmd !NPM_CMD! run build
 IF !ERRORLEVEL! NEQ 0 goto error
 popd
 )
-
+REM 7
 :: 4. KuduSync
 IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
   call :ExecuteCmd "%KUDU_SYNC_CMD%" -v 50 -f "%DEPLOYMENT_SOURCE%\dist\my-app" 
@@ -119,7 +119,7 @@ IF /I "%IN_PLACE_DEPLOYMENT%" NEQ "1" (
   -i ".git;.hg;.deployment;deploy.cmd"
   IF !ERRORLEVEL! NEQ 0 goto error
 )
-
+REM 8
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 goto end
 
