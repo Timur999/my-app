@@ -41,3 +41,5 @@ Thumbs.db
 
 # Untracked files:
 *.root.ts
+*.deploy.cmd
+*.deployment
