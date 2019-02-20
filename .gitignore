@@ -39,6 +39,7 @@ testem.log
 Thumbs.db
 
 
-# some files
-
-/src/app/model/root.ts
+# Untracked files
+*.root.ts
+*.deploy.cmd
+*.deployment
