@@ -40,5 +40,4 @@ Thumbs.db
 
 
 # some files
-
-/src/app/model/root.ts
+src/app/model/root.ts
