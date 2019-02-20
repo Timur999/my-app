@@ -1,8 +1,9 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Group } from '../model/group';
+import { Root } from '../model/root';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class GroupService {
   groupsObser: Observable<Group[]>;
   usersGrouplist: Group[] = [];
 
-  readonly rootUrl = "http://trletsrun.azurewebsites.net";
+  readonly rootUrl = Root.rootUrl;
   constructor(public httpClient: HttpClient) {
     this.groupsSubject = new BehaviorSubject<Group[]>(this.usersGrouplist);
     this.groupsObser = this.groupsSubject.asObservable();

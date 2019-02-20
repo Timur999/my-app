@@ -2,13 +2,14 @@ import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Invitation } from '../model/invitation';
+import { Root } from '../model/root';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InvitationService {
 
-  readonly rootUrl = "http://trletsrun.azurewebsites.net";
+  readonly rootUrl = Root.rootUrl;
   constructor(public httpClient: HttpClient) { }
 
   postInvitation(invitationList: Invitation[]): Observable<any> {
