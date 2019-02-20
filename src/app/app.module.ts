@@ -38,13 +38,14 @@ import { AuthenticationService } from './_services/authentication.service';
 import { GroupService } from './_services/group.service';
 import { SignalrService } from './_services/signalr.service';
 import { UserService } from './_services/user.service';
+import { Root } from './model/root';
 
 
 export function createConfig(): SignalRConfiguration {
   const c = new SignalRConfiguration();
   c.hubName = 'NotifyHub';
   // c.qs = { user: 'Jan Kowalski' };
-  c.url = 'http://trletsrun.azurewebsites.net';
+  c.url = Root.rootUrl;
   c.logging = true;
 
   // >= v5.0.0
