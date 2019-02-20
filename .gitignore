@@ -43,3 +43,4 @@ Thumbs.db
 *.root.ts
 *.deploy.cmd
 *.deployment
+*.package.json
