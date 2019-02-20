@@ -2,13 +2,15 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Root } from '../model/root';
+
 
 @Injectable({
     providedIn: 'root'
 })
 export class AuthenticationService {
 
-    readonly rootUrl = "http://trletsrun.azurewebsites.net";
+    readonly rootUrl = Root.rootUrl;
     public currentUserSubject: BehaviorSubject<string>;
     public currentUser: Observable<string>;
 

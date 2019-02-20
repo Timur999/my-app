@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable, of } from 'rxjs';
-
+import { Root } from '../model/root';
 import { User } from '../model/user';
 
 @Injectable()
 export class UserService {
-    readonly rootUrl = "http://trletsrun.azurewebsites.net";
+    readonly rootUrl = Root.rootUrl;
 
     constructor(public http: HttpClient) { }
 

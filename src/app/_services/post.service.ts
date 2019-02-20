@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Post } from '../model/post';
+import { Root } from '../model/root';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +14,7 @@ export class PostService {
   postsObser: Observable<Post[]>;
   postlist: Post[] = [];
 
-  //"http://localhost:62747"
-  readonly rootUrl = "http://trletsrun.azurewebsites.net";
+  readonly rootUrl = Root.rootUrl;
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json; charset=utf-8' })
   };

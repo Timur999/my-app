@@ -3,13 +3,14 @@ import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Event } from '../model/event';
 import { map } from 'rxjs/operators';
+import { Root } from '../model/root';
 
 @Injectable({
   providedIn: 'root'
 })
 export class EventsService {
 
-  readonly rootUrl = "http://trletsrun.azurewebsites.net";
+  readonly rootUrl = Root.rootUrl;
   eventsSubject: BehaviorSubject<Event[]>
   eventsObser: Observable<Event[]>;
   eventlist: Event[] = [];
