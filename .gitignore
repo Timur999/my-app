@@ -39,6 +39,6 @@ testem.log
 Thumbs.db
 
 # Untracked files
-*.root.ts
+**/model/root.ts
 
 
