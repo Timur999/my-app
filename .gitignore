@@ -40,7 +40,5 @@ Thumbs.db
 
 # Untracked files
 **/model/root.ts
-deploy.cmd
-.deployment
-package.json
+
 
