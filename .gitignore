@@ -38,8 +38,9 @@ testem.log
 .DS_Store
 Thumbs.db
 
-
-# Untracked files:
+# Untracked files
 *.root.ts
 *.deploy.cmd
 *.deployment
+*.package.json
+
