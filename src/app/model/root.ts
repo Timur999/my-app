@@ -1,7 +1,7 @@
 export class Root {
-    // root = "http://trletsrun.azurewebsites.net"; 
-    static rootUrl: string = "http://localhost:63062";
+    // root = "http://localhost:63062"; 
+    static rootUrl: string = "http://trletsrun.azurewebsites.net";
     constructor() {
-        Root.rootUrl = "http://localhost:63062";
+        Root.rootUrl = "http://trletsrun.azurewebsites.net";
     }
 }
